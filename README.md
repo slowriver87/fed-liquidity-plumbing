@@ -33,7 +33,7 @@ Every number on the page comes from nine one-line JavaScript objects between the
 6. Array lengths (17 weeks, 10 business days) and date order; no weekends or holidays.
 7. The page script parses (`node --check`) and Node reads the blocks back unchanged.
 
-A source with nothing new keeps its old value and date. A source that shows a newer date but whose value cannot be read or fails a check gets `null` under the new date, a log row saying so, and an issue. A failed check on a date the page already holds keeps the page value. The script also writes `data/summary.json` for other pages.
+A source with nothing new keeps its old value and date. When a `RATES` or `OPS` date exists because one series has it while the other series has not published that date yet (SOFR posts about 8:00 am ET, EFFR about 9:00 am), the missing cell is a `null` placeholder: not a failed read, no issue, logged as "Not published yet", listed in the run summary, and filled by the next run, which re-reads the last 10 dates of both series. A placeholder never replaces a value the page already holds. `DATA.dts` holds one date, so a DTS not posted yet simply keeps the old date and value. A source that shows a newer date but whose value cannot be read or fails a check gets `null` under the new date, a log row saying so, and an issue. A failed check on a date the page already holds keeps the page value. The script also writes `data/summary.json` for other pages.
 
 The workflow commits only when a data value changed and every check passed, using the repository variables `COMMIT_NAME` and `COMMIT_EMAIL`. If a check fails, nothing is committed, the run fails, and an issue titled "Data update needs attention" is opened or commented on.
 

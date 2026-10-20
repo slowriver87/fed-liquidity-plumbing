@@ -479,3 +479,142 @@ def test_alert_issues_assigned_to_owner():
     gh.assign(3)
     assert s.sent[0] == ("POST", "/issues", {"title": "Alert: x", "body": "b", "labels": ["alert"], "assignees": ["owner-from-env"]})
     assert s.sent[1] == ("POST", "/issues/3/assignees", {"assignees": ["owner-from-env"]})
+
+
+# ---------------------------------------------------------------------------
+# Not published yet: SOFR posts about 8:00 am ET, EFFR about 9:00 am ET
+
+def sofr_with_oct19(offline):
+    """Run #1's state (8:40 am ET, Oct 20): SOFR has Oct 19, EFFR still ends Oct 16."""
+    from conftest import text
+    from sources import nyfed
+    real = offline["rates"]
+    sofr = nyfed.parse_rates(text("nyfed_sofr_search_20260928_20261020_with_oct19.json"), "SOFR")
+
+    def rates(kind, a, b):
+        if kind == "SOFR":
+            return {d: v for d, v in sofr.items() if a <= d <= b}
+        return real(kind, a, b)
+    offline["rates"] = rates
+    return real
+
+
+def test_effr_not_published_yet_is_a_placeholder(offline, tmp_path, capsys):
+    from conftest import text
+    from sources import nyfed
+    assert max(nyfed.parse_rates(text("nyfed_effr_search_20260928_20261020.json"), "EFFR")) == "2026-10-16"
+    sofr_with_oct19(offline)
+    page = write_page(tmp_path, unseeded(seed()))
+    assert run(tmp_path, page) == 0
+    out = capsys.readouterr().out
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert b["RATES"]["dates"][-1] == "2026-10-19"
+    assert (b["RATES"]["sofr"][-1], b["RATES"]["effr"][-1]) == (3.87, None)
+    assert "`RATES.effr`" not in out.split("### Values that change")[1].split("###")[0]   # not listed as a change
+    assert "- `RATES.effr` 2026-10-19" in out.split("### Not published yet")[1]
+    assert not (tmp_path / "issue.md").exists()                                         # no attention, no issue
+    assert "Needs attention" not in out
+    rows = {r[0]: r for r in b["LOG"]}
+    assert rows["Fed funds minus IORB"][1:3] == ["−2bp", "Oct 16"]
+    assert rows["Fed funds minus IORB"][5] == "Not published yet: EFFR for Oct 19."
+    assert rows["SOFR minus IORB"][5] == "New Oct 19. Single source."
+    assert b["POLICY"]["lo"] == 3.75 and b["POLICY"]["hi"] == 4.0                       # range from Oct 16, kept
+
+    # The next run re-reads both series and fills the placeholder
+    real = offline["rates"]
+
+    def with_effr(kind, a, b):
+        r = real(kind, a, b)
+        if kind == "EFFR" and a <= "2026-10-19" <= b:
+            r["2026-10-19"] = {"rate": 3.88, "rev": "", "lo": 3.75, "hi": 4.0}
+        return r
+    offline["rates"] = with_effr
+    assert run(tmp_path, page) == 0
+    out = capsys.readouterr().out
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert b["RATES"]["effr"][-1] == 3.88
+    assert "| `RATES.effr` | null → 3.88 | 2026-10-19 |" in out
+    assert "EFFR 2026-10-19 filled: 3.88 (was not published yet)." in out
+    assert "### Not published yet" not in out
+    assert {r[0]: r for r in b["LOG"]}["Fed funds minus IORB"][5] == "New Oct 19. Single source."
+
+
+def test_effr_not_published_yet_on_the_seeded_page(offline, tmp_path, capsys):
+    """Dry run #1 exactly: the seeded page at 8:40 am ET."""
+    sofr_with_oct19(offline)
+    page = write_page(tmp_path)
+    assert run(tmp_path, page, dry_run=True) == 0
+    out = capsys.readouterr().out
+    assert "(all equal)" in out and "Needs attention" not in out
+    changes = out.split("### Values that change")[1].split("###")[0]
+    assert "→ null" not in changes and "`RATES.sofr`" in changes
+
+
+def test_sofr_not_published_yet_either_way(offline, tmp_path):
+    real = offline["rates"]
+
+    def rates(kind, a, b):
+        r = real(kind, a, b)
+        if kind == "EFFR" and a <= "2026-10-19" <= b:
+            r["2026-10-19"] = {"rate": 3.88, "rev": "", "lo": 3.75, "hi": 4.0}
+        return r
+    offline["rates"] = rates
+    page = write_page(tmp_path, unseeded(seed()))
+    assert run(tmp_path, page) == 0
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert (b["RATES"]["sofr"][-1], b["RATES"]["effr"][-1]) == (None, 3.88)
+    assert {r[0]: r for r in b["LOG"]}["SOFR minus IORB"][5] == "Not published yet: SOFR for Oct 19."
+    assert not (tmp_path / "issue.md").exists()
+
+
+def test_rates_gap_inside_the_series_is_only_a_note(offline, tmp_path, capsys):
+    """A missing print older than the series' newest date is not 'not published yet'."""
+    real = offline["rates"]
+    offline["rates"] = lambda kind, a, b: {d: v for d, v in real(kind, a, b).items()
+                                           if not (kind == "SOFR" and d == "2026-10-14")}
+    page = write_page(tmp_path, unseeded(seed()))
+    assert run(tmp_path, page, dry_run=True) == 0
+    out = capsys.readouterr().out
+    assert "2026-10-14: SOFR has no print for this business day." in out
+    assert "### Not published yet" not in out
+
+
+def test_ops_not_published_yet(offline, tmp_path, capsys):
+    """The newest day's reverse repo result is not out yet: a placeholder, the page's ON RRP rate kept."""
+    real = offline["ops"]
+
+    def ops(a, b):
+        d = real(a, b)
+        if "2026-10-19" in d:
+            d["2026-10-19"] = {**d["2026-10-19"], "rrp": None, "rrp_rate": None}
+        return d
+    offline["ops"] = ops
+    b0 = unseeded(seed())                      # the page one day back: OPS Oct 2 .. Oct 16
+    O = b0["OPS"]
+    b0["OPS"] = {"dates": ["2026-10-02"] + O["dates"][:-1], "srf": [0] + O["srf"][:-1], "rrp": [1501] + O["rrp"][:-1]}
+    page = write_page(tmp_path, b0)
+    assert run(tmp_path, page) == 0
+    out = capsys.readouterr().out
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert (b["OPS"]["dates"][-1], b["OPS"]["srf"][-1], b["OPS"]["rrp"][-1]) == ("2026-10-19", 11, None)
+    assert "- `OPS.rrp` 2026-10-19" in out and "Needs attention" not in out
+    assert not (tmp_path / "issue.md").exists()
+    assert b["POLICY"]["rrp"] == 3.75
+    rows = {r[0]: r for r in b["LOG"]}
+    assert rows["Overnight reverse repo"][1:3] == ["$0.1B", "Oct 16"]
+    assert rows["Overnight reverse repo"][5] == "New Oct 19. Single source. Not published yet: reverse repo for Oct 19."
+
+
+def test_placeholder_never_replaces_a_held_value(offline, tmp_path):
+    real = offline["ops"]
+
+    def ops(a, b):
+        d = real(a, b)
+        d["2026-10-19"] = {**d["2026-10-19"], "rrp": None, "rrp_rate": None}
+        return d
+    offline["ops"] = ops
+    page = write_page(tmp_path, unseeded(seed()))
+    assert run(tmp_path, page, dry_run=True) == 0
+    r = update.Run(today=TODAY, now=NOW, old=unseeded(seed()), keys={})
+    update.do_ops(r)
+    assert r.new["OPS"]["rrp"][-1] == 330 and r.pending == []
