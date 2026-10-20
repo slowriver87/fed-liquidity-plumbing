@@ -1,0 +1,79 @@
+{
+  "updated": "2026-10-20",
+  "h41_week": "2026-10-14",
+  "rates_date": "2026-10-16",
+  "reserves_T": 3.022,
+  "tga_B": 883.4,
+  "netliq_T": 5.872,
+  "netliq_13w_B": -115,
+  "sofr": 3.88,
+  "effr": 3.88,
+  "iorb": 3.9,
+  "sofr_iorb_bp": -2,
+  "effr_iorb_bp": -2,
+  "srf_B": 0.011,
+  "onrrp_B": 0.3,
+  "range": [
+    3.75,
+    4.0
+  ],
+  "rmp": {
+    "from": "2026-10-15",
+    "to": "2026-11-13",
+    "rmp": 0,
+    "reinv": 14.6,
+    "announced": "2026-10-14"
+  },
+  "tiles": [
+    {
+      "name": "Bank reserves",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Treasury General Account",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Overnight reverse repo",
+      "status": "warn",
+      "label": "Empty"
+    },
+    {
+      "name": "Fed total assets, y/y",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Net liquidity, 13-wk change",
+      "status": "warn",
+      "label": "Tightening"
+    },
+    {
+      "name": "SOFR minus IORB",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Fed funds minus IORB",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Standing repo facility usage",
+      "status": "good",
+      "label": "Ample"
+    },
+    {
+      "name": "Fed loans to banks",
+      "status": "warn",
+      "label": "Tightening"
+    },
+    {
+      "name": "Real fed funds rate",
+      "status": "warn",
+      "label": "Restrictive"
+    }
+  ]
+}
