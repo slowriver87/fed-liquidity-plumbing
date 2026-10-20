@@ -329,6 +329,7 @@ class Run:
     seed_mismatch: list = field(default_factory=list)
     cache: dict = field(default_factory=dict)       # parsed source data shared between steps
     nulls: list = field(default_factory=list)       # (source, field, date, why)
+    pending: list = field(default_factory=list)     # (field, date): null placeholder, not published yet
 
     def __post_init__(self):
         self.new = copy.deepcopy(self.old)
@@ -364,6 +365,16 @@ class Run:
     def null(self, src: str, what: str, date: str, why: str):
         self.nulls.append((src, what, date, why))
         self.attention.append(f"{SOURCE_NAMES[src]}: showed {date} but {why}; {what} set to null.")
+
+    def not_published(self, fld: str, date: str):
+        """A date the block holds because another series has it, while this series' newest print is
+        older: the value is not published yet. A null placeholder, refilled by the next run's re-read;
+        not a failed read, no issue."""
+        self.pending.append((fld, date))
+
+    def pending_text(self, fld: str, label: str) -> str:
+        ds = [day_label(d) for f, d in self.pending if f == fld]
+        return f"Not published yet: {label} for {', '.join(ds)}." if ds else ""
 
     def keep(self, src: str, date: str, why: str):
         self.attention.append(f"{SOURCE_NAMES[src]}: the re-read of {date} failed ({why}); the page value was kept.")
@@ -548,7 +559,7 @@ def finish_h41(run: Run):
         if abs(vals["t1"]["rrpOthers"][3] - o["rrp"]) > 1:
             bad_rows.append("rrpOthers")
             why["rrpOthers"] = f"reverse repo Others failed the NY Fed operations tie ({vals['t1']['rrpOthers'][3]} vs {o['rrp']})"
-        if abs(vals["t1"]["repo"][3] - o["srf"]) > 1:
+        if o["srf"] is not None and abs(vals["t1"]["repo"][3] - o["srf"]) > 1:
             bad_rows.append("repo")
             why["repo"] = f"repurchase agreements failed the NY Fed operations tie ({vals['t1']['repo'][3]} vs {o['srf']})"
         if "rrpOthers" not in why and "repo" not in why:
@@ -667,9 +678,22 @@ def do_rates(run: Run):
         iorbs.append(v)
     new = {"dates": dates, "sofr": [sofr[d]["rate"] if d in sofr else None for d in dates],
            "effr": [effr[d]["rate"] if d in effr else None for d in dates], "iorb": iorbs}
-    for d in dates:
-        if d < newest and (d not in sofr or d not in effr):
-            run.notes.append(f"{d}: {'SOFR' if d not in sofr else 'EFFR'} has no print for this business day.")
+    for k, prints in (("sofr", sofr), ("effr", effr)):
+        latest = max(prints) if prints else ""
+        held = dict(zip(R0["dates"], R0[k]))
+        for d in dates:
+            if d in prints:
+                continue
+            if d > latest:
+                if held.get(d) is not None:   # never replace a value the page already holds
+                    new[k][dates.index(d)] = held[d]
+                else:
+                    run.not_published(f"RATES.{k}", d)
+            else:
+                run.notes.append(f"{d}: {k.upper()} has no print for this business day.")
+        for i, d in enumerate(R0["dates"]):
+            if R0[k][i] is None and d in dates and new[k][dates.index(d)] is not None:
+                run.notes.append(f"{k.upper()} {d} filled: {new[k][dates.index(d)]} (was not published yet).")
     if run.seeded("rates") or run.seeded("prates"):
         for i, d in enumerate(R0["dates"]):
             if run.seeded("rates"):
@@ -699,10 +723,12 @@ def do_rates(run: Run):
                       ("effr", ["Fed funds minus IORB", "Fed funds target range", "Real fed funds rate"])):
         n0, n1 = last_num(R0[key])[1], last_num(new[key])[1]
         d0, d1 = R0["dates"][n0] if n0 >= 0 else "", new["dates"][n1] if n1 >= 0 else ""
+        pend = run.pending_text(f"RATES.{key}", key.upper())
         if d1 > d0:
-            run.result("rates", seed + new_text(d1, "Single source."), rows=rows)
-        elif rows[0] != "Real fed funds rate":
-            run.result("rates", seed + ("No new print." if not seed else ""), rows=[r for r in rows if r != "Real fed funds rate"])
+            run.result("rates", " ".join(x for x in (seed + new_text(d1, "Single source."), pend) if x), rows=rows)
+        else:
+            run.result("rates", (seed + (pend or ("No new print." if not seed else ""))).strip(),
+                       rows=[r for r in rows if r != "Real fed funds rate"])
     if "iorb" in run.cache:
         run.result("prates", "Re-read: matches the seed (Fed policy rates file)." if run.seeded("prates") else
                    ("IORB from the Fed policy rates file." if dates[-1] > R0["dates"][-1] else "No change."),
@@ -729,12 +755,22 @@ def do_ops(run: Run):
     if dates[-1] < O0["dates"][-1]:
         return run.not_reached("ops", f"newest complete day {dates[-1]} is older than the page's {O0['dates'][-1]}")
     new = {"dates": dates, "srf": [days[d]["srf"] for d in dates], "rrp": [days[d]["rrp"] for d in dates]}
-    for d in dates:
-        if d > O0["dates"][-1]:
-            if days[d]["srf"] is None:
-                run.null("ops", "OPS.srf", d, "no overnight repo result was published")
-            if days[d]["rrp"] is None:
-                run.null("ops", "OPS.rrp", d, "no overnight reverse repo result was published")
+    for k, what in (("srf", "overnight repo"), ("rrp", "overnight reverse repo")):
+        latest = max((d for d in usable if days[d][k] is not None), default="")
+        held = dict(zip(O0["dates"], O0[k]))
+        for d in dates:
+            if days[d][k] is not None:
+                continue
+            if d > latest:
+                if held.get(d) is not None:   # never replace a value the page already holds
+                    new[k][dates.index(d)] = held[d]
+                else:
+                    run.not_published(f"OPS.{k}", d)
+            elif d > O0["dates"][-1]:
+                run.null("ops", f"OPS.{k}", d, f"no {what} result was published")
+        for i, d in enumerate(O0["dates"]):
+            if O0[k][i] is None and d in dates and new[k][dates.index(d)] is not None:
+                run.notes.append(f"OPS.{k} {d} filled: {new[k][dates.index(d)]} (was not published yet).")
     if run.seeded("ops"):
         for i, d in enumerate(O0["dates"]):
             if d in dates:
@@ -751,11 +787,13 @@ def do_ops(run: Run):
     run.fresh["ops"] = dates[-1]
     run.cache["ops_last"] = days[dates[-1]]
     run.cache["ops_last_date"] = dates[-1]
+    pend = " ".join(x for x in (run.pending_text("OPS.srf", "standing repo"),
+                                run.pending_text("OPS.rrp", "reverse repo")) if x)
     if dates[-1] > O0["dates"][-1]:
         run.newdata.add("ops")
-        run.result("ops", new_text(dates[-1], "Single source."))
+        run.result("ops", " ".join(x for x in (new_text(dates[-1], "Single source."), pend) if x))
     else:
-        run.result("ops", "Re-read: matches the seed." if run.seeded("ops") else "No new release.")
+        run.result("ops", " ".join(x for x in ("Re-read: matches the seed." if run.seeded("ops") else "No new release.", pend) if x))
 
 
 def last_decision(meetings: list[list[str]] | None, before: str) -> str | None:
@@ -801,7 +839,10 @@ def do_policy(run: Run, meetings: list[list[str]] | None):
             P["move"] = {"date": (parse_iso(first) - dt.timedelta(1)).isoformat(), "bp": js_round((hi - P0["hi"]) * 100)}
         P["lo"], P["hi"] = lo, hi
     if last_ops is not None:
-        P["srf"], P["rrp"] = last_ops["srf_rate"], last_ops["rrp_rate"]
+        # A rate whose operation is not published yet keeps the page's rate (rates are in force until changed)
+        for k in ("srf", "rrp"):
+            if last_ops[k + "_rate"] is not None:
+                P[k] = last_ops[k + "_rate"]
         P["asof"] = asof
     if "iorb" in run.cache and asof:
         P["iorb"] = iorb_on(run, P["asof"])
@@ -1021,13 +1062,17 @@ class Diff:
     added: bool = False
 
 
-def diff_blocks(old: dict, new: dict) -> list[Diff]:
+def diff_blocks(old: dict, new: dict, pending=()) -> list[Diff]:
+    """Changed values. Not-published-yet placeholders (`pending`) are not changes."""
     fo, fn = flatten(old), flatten(new)
+    pend = set(pending)
     out = []
     for f, (src, nv) in fn.items():
         ov = fo.get(f, (src, {}))[1]
         for d in sorted(nv):
             if d in ov and ov[d] == nv[d]:
+                continue
+            if nv[d] is None and (f, d) in pend:
                 continue
             if d not in ov and len(nv) > 1 and d != max(nv):
                 out.append(Diff(f, src, d, None, nv[d], None, False, added=True))
@@ -1213,7 +1258,7 @@ def run_update(page: Path, summary_path: Path, dry_run: bool, commit_msg: Path |
         if run.seed_mismatch and not skip_seed:
             raise CheckFailed("check 3: seed values differ from the sources (nothing overwritten):\n"
                               + "\n".join(f"- {x}" for x in run.seed_mismatch))
-        diffs = diff_blocks(old, run.new)
+        diffs = diff_blocks(old, run.new, run.pending)
         data_changed = bool(diffs)   # CAL and LOG ride along with a data change; alone they commit nothing
         if diffs:
             run.new["DATA"]["updated"] = today.isoformat()
@@ -1274,6 +1319,9 @@ def run_update(page: Path, summary_path: Path, dry_run: bool, commit_msg: Path |
             say(f"- {a['title']}{state}: {a['body']}")
     else:
         say("None.")
+    if run.pending:
+        say("\n### Not published yet (null placeholders; the next run re-reads and fills them)\n")
+        say("\n".join(f"- `{f}` {d}" for f, d in run.pending))
     say("\n### Sources not reached\n")
     say("\n".join(f"- {u}" for u in run.unreached) if run.unreached else "None.")
     if run.layouts:
