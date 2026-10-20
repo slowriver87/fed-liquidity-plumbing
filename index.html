@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fed Liquidity Plumbing</title>
+<meta name="description" content="How much cash sits in the U.S. banking system, what drains it, and whether overnight funding markets show strain. Built from Federal Reserve, New York Fed, Treasury and BEA data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column (max 1180px). Header, education note, current read, rates strip,
+   regime tiles, history, pressure charts, scorecard, consumer tiles, calculator, next releases,
+   notes, data check log, footer. Shared rules are copied from the Public Debt Monitor. */
+:root {
+  --bg: #f2f4f7;
+  --card: #ffffff;
+  --fg: #141d27;
+  --muted: #5a6875;
+  --faint: #8b97a3;
+  --line: #d9dfe6;
+  --grid: #e8ecf0;
+  --pub: #2a78d6;
+  --gov: #eb6834;
+  --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4;
+  --good: #1e7f3a; --bad: #c0392b;
+  --font-sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101519; --card: #181f26; --fg: #edf1f4; --muted: #a3afba; --faint: #76838f;
+    --line: #2b3640; --grid: #222b34; --pub: #3987e5; --gov: #e0602b;
+    --s3: #199e70; --s4: #c98500; --s5: #d55181; --good: #4cc26a; --bad: #ef6b5c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101519; --card: #181f26; --fg: #edf1f4; --muted: #a3afba; --faint: #76838f;
+  --line: #2b3640; --grid: #222b34; --pub: #3987e5; --gov: #e0602b;
+  --s3: #199e70; --s4: #c98500; --s5: #d55181; --good: #4cc26a; --bad: #ef6b5c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); font-size: 14px; line-height: 1.45; margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 15px; font-weight: 600; }
+.eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+.sub { color: var(--muted); font-size: 13px; }
+a { color: var(--pub); }
+header { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between; margin-bottom: 20px; }
+header .sub { text-wrap: pretty; }
+.disclaimer { margin: -6px 0 16px; padding: 10px 14px; border-radius: 6px; background: #163a6b; color: #ffffff; font-size: 13px; text-wrap: pretty; }
+.disclaimer b { color: #ffffff; font-weight: 700; }
+header .meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; color: var(--muted); background: var(--card); }
+.pill b { color: var(--fg); font-weight: 600; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.tile .label { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.tile .value { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.tile .delta { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; font-variant-numeric: tabular-nums; }
+.tile .delta b { font-weight: 600; color: var(--fg); }
+.tile svg { width: 100%; height: 34px; display: block; margin-top: 4px; }
+.swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex: none; }
+.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 22px; align-content: start; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; min-width: 0; display: flex; flex-direction: column; }
+.stat .k { font-size: 11px; color: var(--muted); min-height: 2.8em; display: flex; align-items: flex-end; }
+.stat .v { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat .d { font-size: 11px; color: var(--muted); }
+section.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 16px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+.card-head .sub { max-width: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart { position: relative; width: 100%; overflow-x: auto; overflow-y: hidden; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .vlab { paint-order: stroke; stroke: var(--card); stroke-width: 4px; stroke-linejoin: round; }
+.chart text { font-family: var(--font-sans); font-size: 11px; fill: var(--muted); }
+.chart .grid line { stroke: var(--grid); stroke-width: 1; }
+.chart .axis line { stroke: var(--line); }
+.tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); min-width: 170px; z-index: 2; display: none; }
+.tip .t { font-weight: 600; margin-bottom: 4px; }
+.tip .r { display: flex; justify-content: space-between; gap: 14px; font-variant-numeric: tabular-nums; }
+.tip .r span:first-child { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.two { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; margin-bottom: 16px; }
+.two > section.card { margin-bottom: 0; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; font-variant-numeric: tabular-nums; table-layout: fixed; }
+th, td { padding: 5px 6px; text-align: right; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th { font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+th:first-child, td:first-child { text-align: left; }
+td.num { font-family: var(--font-mono); font-size: 12px; }
+tr.group td { color: var(--muted); font-weight: 600; border-bottom: 0; padding-top: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+tr.total td { font-weight: 600; border-top: 1px solid var(--line); }
+.pos { color: var(--good); } .neg { color: var(--bad); }
+details { margin-top: 6px; }
+summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+.notes { font-size: 12.5px; color: var(--muted); }
+.notes p { margin: 6px 0; }
+footer { color: var(--muted); font-size: 12px; margin-top: 24px; }
+footer p { margin: 4px 0; }
+footer .srcs ul { margin: 4px 0 0; padding-left: 18px; columns: 2; column-gap: 32px; }
+footer .srcs li { break-inside: avoid; margin-bottom: 2px; }
+
+/* ---- Yield Regime Monitor additions (same tokens) ---- */
+[hidden] { display: none !important; }
+:root { --warn: var(--s4); --serious: var(--gov); --crit: var(--bad); }
+.dek { color: var(--muted); font-size: 13px; margin: 4px 0 10px; text-wrap: pretty; }
+.sec-title { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; margin: 24px 0 10px; }
+.sec-title .sub { max-width: 70ch; }
+.read { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 16px; }
+.read h2 { font-size: 18px; font-weight: 600; text-wrap: pretty; margin: 4px 0 10px; }
+.read .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 28px; }
+.read .cols h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; margin-bottom: 3px; }
+.read .cols p { margin: 0; font-size: 13px; text-wrap: pretty; }
+.read .auto { font-size: 11px; color: var(--faint); margin-top: 10px; }
+.stat .v { font-family: var(--font-mono); }
+.stat.stale .v { color: var(--muted); }
+.stat .d.warnd { color: var(--bad); }
+.tiles5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
+.tiles4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.tile.sig { position: relative; overflow: hidden; padding-left: 18px; }
+.tile.sig::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--stripe, var(--line)); }
+.tile.sig .value { font-family: var(--font-mono); font-size: 26px; }
+.tile.sig .value.txt { font-family: var(--font-sans); font-size: 22px; }
+.tile.sig .value small { font-size: 12px; color: var(--muted); font-weight: 500; margin-left: 4px; }
+.tile .desc { font-size: 12.5px; color: var(--muted); text-wrap: pretty; }
+.tile .rule { font-size: 11.5px; color: var(--faint); }
+.st { display: inline-flex; align-items: center; gap: 6px; width: max-content; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; }
+.st i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.st-good { --stripe: var(--good); } .st-good .st { color: var(--good); }
+.st-warn { --stripe: var(--warn); } .st-warn .st { color: var(--warn); }
+.st-serious { --stripe: var(--serious); } .st-serious .st { color: var(--serious); }
+.st-crit { --stripe: var(--crit); } .st-crit .st { color: var(--crit); }
+.st-none { --stripe: var(--line); } .st-none .st { color: var(--muted); }
+.tile details summary { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+.tile details p { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; text-wrap: pretty; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.charts > section.card { margin-bottom: 0; }
+.cnote { font-size: 12px; color: var(--muted); margin: 8px 0 0; text-wrap: pretty; }
+.comm { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 24px; }
+.comm h3 { font-size: 13.5px; font-weight: 600; margin-bottom: 3px; }
+.comm p { margin: 0; font-size: 13px; color: var(--muted); text-wrap: pretty; }
+.comm p.auto { color: var(--fg); }
+.tag { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); font-weight: 600; }
+.hbar { display: grid; gap: 7px; font-size: 12.5px; }
+.hb { display: grid; grid-template-columns: minmax(130px, 34%) 1fr; gap: 10px; align-items: center; }
+.hb .nm small { display: block; color: var(--faint); font-size: 10.5px; }
+.hb .track { position: relative; height: 18px; }
+.hb .bar { position: absolute; left: 0; top: 3px; height: 12px; border-radius: 0 4px 4px 0; background: var(--c); }
+.hb .val { position: absolute; top: 0; font-family: var(--font-mono); font-size: 12px; white-space: nowrap; }
+.hb .med { position: absolute; top: -4px; bottom: -4px; border-left: 1px dashed var(--faint); }
+.hb.now .nm { font-weight: 600; }
+.hb.now .bar { outline: 2px solid var(--fg); outline-offset: 1px; }
+#score { min-width: 760px; }
+#score td, #score th { white-space: normal; vertical-align: top; padding: 7px 8px; }
+#score td:nth-child(2), #score td:nth-child(3), #score th:nth-child(2), #score th:nth-child(3) { text-align: right; }
+#score td.what { color: var(--muted); text-align: left; }
+#score th.what { text-align: left; }
+.dir { font-family: var(--font-mono); font-size: 12px; white-space: nowrap; }
+.calc { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ctrl { display: grid; gap: 4px; margin-bottom: 12px; }
+.ctrl label { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.ctrl output { font-family: var(--font-mono); color: var(--fg); font-weight: 500; }
+input[type=range] { width: 100%; accent-color: var(--pub); }
+input[type=range]:focus-visible { outline: 2px solid var(--pub); outline-offset: 3px; }
+.btn { font: inherit; font-size: 12.5px; font-weight: 600; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.btn:focus-visible { outline: 2px solid var(--pub); outline-offset: 2px; }
+.rrow { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--grid); padding: 7px 0; }
+.rrow span { font-size: 13px; color: var(--muted); }
+.rrow b { font-family: var(--font-mono); font-size: 17px; font-weight: 500; }
+.gapbar { height: 10px; border-radius: 5px; background: var(--grid); position: relative; overflow: hidden; margin: 8px 0; }
+.gapbar i { position: absolute; top: 0; bottom: 0; }
+.gapbar::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--faint); }
+.cal { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 10px; }
+.cal > div { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; display: grid; gap: 2px; align-content: start; }
+.cal .when { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.cal .ev { font-weight: 600; font-size: 13.5px; }
+.cal .why { font-size: 12.5px; color: var(--muted); text-wrap: pretty; }
+.notelist { display: grid; gap: 12px; }
+.notelist .n { border-top: 1px solid var(--grid); padding-top: 10px; }
+.notelist .n:first-child { border-top: 0; padding-top: 0; }
+.notelist .n p { margin: 4px 0 0; font-size: 13px; color: var(--muted); text-wrap: pretty; }
+.notelist .old { color: var(--bad); font-size: 11.5px; }
+#log { min-width: 860px; }
+#log td { white-space: normal; vertical-align: top; }
+#log th, #log td { text-align: left; }
+#log td:nth-child(2) { font-family: var(--font-mono); font-size: 12px; }
+@media (max-width: 980px) {
+  .tiles5 { grid-template-columns: repeat(2, 1fr); }
+  .tiles4 { grid-template-columns: repeat(2, 1fr); }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .charts, .calc, .two { grid-template-columns: 1fr; }
+  .read .cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .tiles5, .tiles4 { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  section.card, .read { padding: 12px; }
+  footer .srcs ul { columns: 1; }
+}
+.stat .k { color: var(--fg); font-size: 12px; font-weight: 600; }
+.tile .label { color: var(--fg); font-size: 13px; font-weight: 600; }
+#score td:first-child { font-weight: 600; }
+#score td:first-child .sub { font-weight: 400; }
+#log td:first-child { font-weight: 600; }
+</style>
+
+<style>
+/* ---- Fed Liquidity Plumbing additions (same tokens; nothing above is changed) ---- */
+:root { --zg: color-mix(in srgb, var(--good) 28%, transparent); --zw: color-mix(in srgb, var(--warn) 32%, transparent); --zc: color-mix(in srgb, var(--crit) 28%, transparent); }
+.gauge svg { display: block; width: 100%; height: 22px; overflow: visible; margin-top: 2px; }
+.gl { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--faint); }
+.tile .asof { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
+.howto { margin: 8px 0 0; padding-left: 18px; font-size: 13px; display: grid; gap: 4px; text-wrap: pretty; }
+.howto li::marker { color: var(--pub); }
+.howto li.auto { color: var(--fg); }
+.primer { display: grid; grid-template-columns: 1fr 1.05fr; gap: 18px 28px; align-items: start; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: st; }
+.steps li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; font-size: 13.5px; counter-increment: st; text-wrap: pretty; }
+.steps li::before { content: counter(st); width: 22px; height: 22px; border-radius: 50%; background: var(--pub); color: #ffffff; font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+.steps b { display: block; }
+.primer svg { width: 100%; height: auto; display: block; }
+.primer svg text { font-family: var(--font-sans); }
+.gloss { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 24px; margin: 0; }
+.gloss dt { font-weight: 600; font-size: 13px; }
+.gloss dd { margin: 2px 0 0; font-size: 13px; color: var(--muted); text-wrap: pretty; }
+.deep { display: grid; gap: 18px; }
+.deep h3 { font-size: 13.5px; font-weight: 600; margin-bottom: 6px; }
+.deep p { margin: 0; font-size: 13.5px; text-wrap: pretty; }
+.deep2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; }
+.now { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; font-size: 13.5px; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
+.now .num { font-family: var(--font-mono); font-weight: 500; }
+.now .st-good, .now .st-warn, .now .st-crit, .now .st-none { display: inline-flex; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; }
+.pair > div { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; font-size: 13px; }
+.pair b { display: block; font-size: 13.5px; margin-bottom: 2px; }
+.pair span { color: var(--muted); }
+.ladder { position: relative; height: 14px; margin: 46px 0 30px; display: flex; }
+.ladder i { display: block; height: 100%; }
+.ladder i:first-child { border-radius: 3px 0 0 3px; }
+.ladder i:nth-child(3) { border-radius: 0 3px 3px 0; }
+.ladder .mk { position: absolute; top: -6px; width: 4px; height: 26px; border-radius: 1px; transform: translateX(-50%); }
+.ladder .mk span { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-mono); font-size: 11px; font-weight: 500; padding-bottom: 3px; }
+.ladder .mk.hi span { padding-bottom: 19px; }
+.ladder .tk { position: absolute; top: 100%; border-left: 1px solid var(--faint); padding: 7px 0 0 4px; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); white-space: nowrap; line-height: 1; }
+.ladder .tk.r { border-left: none; border-right: 1px solid var(--faint); padding: 7px 4px 0 0; transform: translateX(-100%); }
+.zt { display: grid; border-top: 1px solid var(--line); }
+.zt > div { display: grid; grid-template-columns: 220px 1fr; gap: 4px 16px; padding: 9px 0; border-bottom: 1px solid var(--grid); font-size: 13px; }
+.zt > div:last-child { border-bottom: none; }
+.zt .k { font-weight: 600; display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; align-content: flex-start; }
+.zt .v { color: var(--muted); }
+@media (max-width: 980px) { .gloss { grid-template-columns: repeat(2, 1fr); } .primer, .deep2 { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .gloss, .zt > div { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">Federal Reserve · New York Fed · U.S. Treasury · BEA</div>
+    <h1>Fed Liquidity Plumbing</h1>
+    <div class="sub">How much cash sits in the banking system, what drains it, and whether overnight funding markets are showing strain.</div>
+  </div>
+  <div class="meta">
+    <span class="pill">Balance sheet <b id="p-h41"></b></span>
+    <span class="pill">Rates <b id="p-rates"></b></span>
+    <span class="pill">Updated <b id="p-upd"></b></span>
+    <a class="pill" href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noopener">Source: Fed H.4.1 ↗</a>
+  </div>
+</header>
+
+<p class="disclaimer"><b>For education only. Not financial advice.</b> Figures come from public government sources and are checked, but may contain errors. Check the original source before relying on it.</p>
+
+<div class="read" id="read"></div>
+
+<div class="stats" id="tape" aria-label="Policy settings and overnight rates"></div>
+
+<section class="card" id="primer">
+  <h2>How the plumbing works, in 60 seconds</h2>
+  <div class="primer" style="margin-top:10px">
+    <ol class="steps">
+      <li><span><b>The Fed creates reserves.</b> When the Fed buys a Treasury bill, it pays by crediting a bank's account at the Fed. That balance is a "reserve." Reserves are the cash banks use to pay each other, and only the Fed can create them.</span></li>
+      <li><span><b>Two accounts pull cash out of the system.</b> The Treasury keeps its checking account (the TGA) at the Fed; when taxes come in or it sells more debt, money leaves banks and sits there. Money funds can also park cash at the Fed overnight (reverse repo). Both shrink bank reserves.</span></li>
+      <li><span><b>Scarce reserves show up as higher overnight rates.</b> If banks have plenty of reserves, they lend cash overnight cheaply. If reserves get tight, overnight lending rates (SOFR, fed funds) push up toward the top of the Fed's range and can break through it. That's what happened in September 2019: on Sep 17 overnight repo rates touched 10% during the day, SOFR hit 5.25%, and fed funds rose to 2.30%, above the Fed's 2.00–2.25% range.</span></li>
+      <li><span><b>The Fed has two fixes.</b> It can lend cash on demand through its standing repo facility, which is meant to cap the spike. The cap is soft: SOFR was 4.22% on Oct 31, 2025, above the facility's 4.00% rate. Or it can buy Treasury bills to add reserves permanently. It began doing that in December 2025. <span id="primerRmp"></span></span></li>
+    </ol>
+    <svg id="flow" viewBox="0 0 460 300" role="img" aria-label="Diagram of how reserves flow between the Fed, banks, the Treasury account and the reverse repo facility"></svg>
+  </div>
+  <p class="dek" style="margin-top:12px"><b>Why it matters for markets:</b> when reserves are ample, this system is invisible. When they run short, funding costs jump, banks pull back from lending and trading, and the Fed is forced to step in. The page below tracks how close the system is to that edge.</p>
+</section>
+
+<div class="sec-title"><h2>Balance sheet and reserves</h2><div class="sub">How much cash sits in the banking system, and what drains it.</div></div>
+<p class="dek">Think of <b>bank reserves</b> as the water level in a tank. The Fed's asset purchases fill it. The <b>Treasury's account</b> and the <b>reverse repo facility</b> are two drains. <b>Net liquidity</b> combines all three into one number. These update weekly from the Fed's H.4.1 report, released Thursdays at 4:30pm ET (usually the next business day if Thursday is a holiday).</p>
+<div class="tiles5" id="bs"></div>
+
+<div class="two">
+  <section class="card">
+    <h2>Reserves and the Treasury's cash account move in opposite directions</h2>
+    <div class="legend" style="margin-top:8px"><span><i class="swatch" style="background:var(--pub)"></i>Bank reserves (left, $T)</span><span><i class="swatch" style="background:var(--gov)"></i>Treasury General Account (right, $T, inverted)</span></div>
+    <div class="chart" id="resChart"></div>
+    <ul class="howto">
+      <li>The blue line is the cash banks hold. The orange dashed line is the Treasury's account, drawn upside down.</li>
+      <li class="auto" id="resAuto"></li>
+      <li>The link is tightest when the reverse repo facility is near empty. When it held lots of cash, it absorbed more of these swings.</li>
+    </ul>
+    <p class="cnote" id="resNote"></p>
+  </section>
+  <section class="card">
+    <h2>The rate corridor</h2>
+    <div class="chart" id="corridor" style="margin-top:8px"></div>
+    <ul class="howto">
+      <li>The shaded band is the Fed's target range for overnight rates.</li>
+      <li>The Fed enforces it with three administered rates: the reverse repo floor, IORB in the middle, and the standing repo ceiling.</li>
+      <li>The dots are market rates. Sitting just under IORB is healthy. Dots rising toward the red ceiling would mean cash is getting scarce.</li>
+      <li class="auto" id="corAuto"></li>
+    </ul>
+    <p class="cnote">The Fed keeps overnight rates inside its target range using IORB, the standing repo ceiling and the reverse repo floor. Market rates (SOFR, EFFR) drifting up toward or above IORB is the classic sign reserves are getting scarce.</p>
+  </section>
+</div>
+
+<div class="sec-title"><h2>Money markets and stance</h2><div class="sub">Where stress would show up first.</div></div>
+<p class="dek">The balance sheet numbers above tell you how much cash is in the system. These tell you whether it's <b>enough</b>. If reserves were getting scarce, you'd see it here first: overnight rates creeping above what the Fed pays on reserves, and banks tapping the Fed's lending tools. The last tile measures the Fed's policy stance, the other lever it controls.</p>
+<div class="tiles5" id="mm"></div>
+
+<section class="card">
+  <h2>Net liquidity: Fed assets minus the Treasury's cash and reverse repo</h2>
+  <div class="chart" id="netChart" style="margin-top:8px"></div>
+  <ul class="howto">
+    <li>A rough gauge of the cash sloshing through markets. Some traders watch it, arguing it has tracked risk assets like stocks and crypto over some periods. That link is loose and not guaranteed.</li>
+    <li>The level matters less than the direction. A steady slide means less of the Fed's cash is left in the system after the Treasury's account and reverse repo take their share; a rebound means more. Whether that moves stock or crypto prices is debated.</li>
+    <li class="auto" id="netAuto"></li>
+  </ul>
+  <p class="cnote" id="netNote"></p>
+</section>
+
+<div class="sec-title"><h2>What the numbers say</h2><div class="sub">The current readings, then what they mean. Lines in dark text are written by the page from the data; causes and context are in the dated Notes.</div></div>
+<section class="card"><div class="tag">Automatic summary</div><div class="comm" id="readComm" style="margin-top:6px"></div></section>
+
+<div class="sec-title"><h2>Next events that update this page</h2><div class="sub">From the publishers' own calendars. Times are Eastern.</div></div>
+<div class="cal" id="cal"></div>
+
+<div class="sec-title"><h2>Notes</h2><div class="sub">Hand-written context: Fed decisions, announcements, causes. Each note carries its date and is not updated automatically.</div></div>
+<section class="card"><div class="notelist" id="notes"></div></section>
+
+<section class="card" id="checklog">
+  <h2>Data check log</h2>
+  <p class="dek">One row per headline number. "Checked" is the last date the update script read the value from its source; an older date means it was not re-read. All dates are 2026 unless stated.</p>
+  <div class="tablewrap"><table id="log"></table></div>
+  <p class="cnote" id="logNote"></p>
+</section>
+
+<section class="card">
+  <h2>Glossary</h2>
+  <dl class="gloss" style="margin-top:10px">
+    <div><dt>Reserves</dt><dd>Cash banks hold in their accounts at the Fed. The base layer of the financial system; only the Fed creates it.</dd></div>
+    <div><dt>IORB (interest on reserve balances)</dt><dd>The rate the Fed pays banks on reserves. Banks have little reason to lend cash for less, so it anchors overnight rates. Lenders that can't earn it, such as money funds, often lend a little below it.</dd></div>
+    <div><dt>TGA (Treasury General Account)</dt><dd>The U.S. government's checking account at the Fed. Money in it is outside the banking system.</dd></div>
+    <div><dt>Overnight reverse repo (ON RRP)</dt><dd>A Fed facility where eligible lenders (money market funds, government-sponsored enterprises and large banks) lend cash to the Fed overnight. They can earn its rate risk-free, so they have little reason to lend for less. That puts a floor under overnight rates. It also acts as a reservoir of spare cash.</dd></div>
+    <div><dt>Repo</dt><dd>A short loan backed by Treasury securities as collateral. The main way Wall Street funds itself overnight.</dd></div>
+    <div><dt>SOFR (Secured Overnight Financing Rate)</dt><dd>A broad measure of the cost of overnight repo loans backed by Treasuries, based on about $3T of trades a day in October 2026 (New York Fed). The benchmark for most floating-rate loans.</dd></div>
+    <div><dt>EFFR (effective fed funds rate)</dt><dd>The typical rate on unsecured overnight loans in the fed funds market. Federal Home Loan Banks supplied about 97% of that lending (Fed note, 2024), mostly to U.S. branches of foreign banks. The rate the Fed officially targets.</dd></div>
+    <div><dt>Standing repo facility (SRF)</dt><dd>The Fed lends cash against Treasuries and other high-quality bonds to primary dealers and other approved counterparties, including banks, at a fixed rate (shown in the strip at the top). It is meant to limit how high repo rates can spike. The limit is soft: SOFR was 4.22% on Oct 31, 2025, above the 4.00% facility rate, and some dealers avoid it because of stigma.</dd></div>
+    <div><dt>QT (quantitative tightening)</dt><dd>Letting bonds mature without replacing them, which shrinks the balance sheet and drains reserves. The Fed ended QT on Dec 1, 2025, and started bill purchases later that month.</dd></div>
+    <div><dt>Reserve management purchases</dt><dd>Fed purchases of short-term bills to keep reserves ample. A technical fix to the plumbing, not stimulus like QE.</dd></div>
+    <div><dt>H.4.1</dt><dd>The Fed's weekly balance sheet report, released Thursdays at 4:30pm ET (usually the next business day if Thursday is a holiday). The source for most numbers on this page.</dd></div>
+    <div><dt>Ample reserves</dt><dd>The Fed's goal: enough reserves that overnight rates stay controlled by its administered rates, not by day-to-day swings in supply.</dd></div>
+  </dl>
+</section>
+
+<section class="card" id="sofr-iorb">
+  <h2>Deep dive: why SOFR versus IORB is the number to watch</h2>
+  <div class="deep" style="margin-top:10px">
+    <p><b>IORB</b> is what the Fed pays banks on cash left at the Fed. <b>SOFR</b> is what the market pays to borrow cash overnight against Treasuries. The gap between them does nothing mechanical by itself. It is a signal of how plentiful cash is, and the signal comes from who is doing the lending.</p>
+    <div class="now" id="sofrNow"></div>
+    <div>
+      <div class="ladder" id="sofrLadder" role="img" aria-label="Where SOFR and fed funds sit between the Fed's floor, IORB and ceiling"></div>
+      <p class="cnote">Green is anywhere under IORB. Amber starts at IORB. Red starts 5bp above it and runs to the standing repo ceiling. The markers are the latest market rates.</p>
+    </div>
+    <div>
+      <h3>The two rates</h3>
+      <div class="pair">
+        <div><b>IORB: set by the Fed</b><span>A fixed rate the Fed chooses. Only banks can earn it. It is risk-free and takes no effort: the cash just sits in the bank's account at the Fed.</span></div>
+        <div><b>SOFR: set by the market</b><span>The going price of an overnight loan backed by Treasuries, based on trillions of dollars of trades a day. Banks, money market funds, dealers and hedge funds all trade in this market.</span></div>
+      </div>
+    </div>
+    <div>
+      <h3>Why comparing them works</h3>
+      <ul class="howto">
+        <li>A bank can always earn IORB by doing nothing. So a bank has little reason to lend its cash overnight for less than that.</li>
+        <li>Money market funds and similar lenders cannot earn IORB. When cash is plentiful they compete to lend it and accept a little less. That pulls SOFR a few basis points under IORB.</li>
+        <li>When SOFR climbs to IORB or above on ordinary days, those lenders have run out of spare cash. Borrowers now have to pay enough to pull reserves out of banks. That is the sign reserves are no longer plentiful.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>How to read the gap</h3>
+      <div class="zt">
+        <div class="st-good"><span class="k">A few bp below <span class="st"><i></i>Ample</span></span><span class="v">Cash is plentiful and the Fed's rates are steering the market. This is the target state. The Fed calls it "ample reserves."</span></div>
+        <div class="st-warn"><span class="k">Level, up to 5bp above <span class="st"><i></i>Tightening</span></span><span class="v">Spare cash is used up at the margin. Normal for a day or two around quarter-end or tax dates. A warning if it lingers on ordinary days.</span></div>
+        <div class="st-crit"><span class="k">5bp or more above <span class="st"><i></i>Stressed</span></span><span class="v">Cash is scarce. Borrowers pay up, dealers turn to the Fed's standing repo facility, and rates get jumpy. September 2019 was the extreme case.</span></div>
+      </div>
+      <p class="cnote">Lower is not always better. SOFR stuck down near the reverse repo floor would mean the system holds far more cash than it needs, so the Fed's balance sheet is bigger than necessary. The sweet spot is slightly under IORB.</p>
+    </div>
+    <div class="deep2">
+      <div>
+        <h3>What happens if SOFR stays above IORB</h3>
+        <ul class="howto">
+          <li>Borrowing costs rise a little for anyone who funds Treasuries overnight, such as dealers and hedge funds, and for loans priced off SOFR.</li>
+          <li>Fed funds usually follows. It is a smaller, slower market, so SOFR is the early warning and the fed funds tile is the confirmation.</li>
+          <li>The Fed is pushed to add reserves. The permanent fix is buying Treasury bills. The stopgap is lending through the standing repo facility.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Noise or signal? A quick test</h3>
+        <ul class="howto">
+          <li><b>Check the calendar.</b> Quarter-ends, month-ends, mid-month tax dates and big Treasury debt settlement days all push SOFR up for a day or two. That is noise.</li>
+          <li><b>Check the next few days.</b> If SOFR drops back under IORB once the date passes, nothing has changed. If it stays at or above IORB on ordinary days, that is signal.</li>
+          <li><b>Check the backstop.</b> SOFR above IORB together with rising standing repo facility usage means dealers cannot find cash in the market. That is stress.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>How the colors work.</strong> Each measure has fixed thresholds on its gauge. Green means liquidity is ample and markets are functioning normally; amber means the system is tightening or a buffer is thin; red means signs of reserve scarcity or funding stress. Reserve thresholds reference about $2.85T, close to where reserves were ($2.86T, week of Dec 3, 2025) just before the Fed started buying bills. Thresholds are judgment calls, not model outputs.</p>
+  <p><strong>Net liquidity</strong> follows the common market convention: total Fed assets on Wednesday (H.4.1 Table 5), minus the Treasury's account as a week average, minus the reverse repo "Others" line on Wednesday (H.4.1 Table 1). It is not an official measure.</p>
+  <details class="srcs"><summary>Sources (23)</summary>
+    <ul>
+      <li><a href="https://www.federalreserve.gov/releases/h41/current/" target="_blank" rel="noopener">Federal Reserve, H.4.1 factors affecting reserve balances</a></li>
+      <li><a href="https://www.federalreserve.gov/monetarypolicy/reqresbalances.htm" target="_blank" rel="noopener">Federal Reserve, interest on reserve balances</a></li>
+      <li><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">Federal Reserve, FOMC calendar</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener">New York Fed, SOFR</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/reference-rates/effr" target="_blank" rel="noopener">New York Fed, effective federal funds rate and target range</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/desk-operations/repo" target="_blank" rel="noopener">New York Fed, repo and reverse repo operations</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/domestic-market-operations/monetary-policy-implementation/treasury-securities/treasury-securities-operational-details" target="_blank" rel="noopener">New York Fed, Treasury purchase schedule</a></li>
+      <li><a href="https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/" target="_blank" rel="noopener">U.S. Treasury, Daily Treasury Statement</a></li>
+      <li><a href="https://www.bea.gov/data/personal-consumption-expenditures-price-index-excluding-food-and-energy" target="_blank" rel="noopener">BEA, core PCE price index</a></li>
+      <li><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm" target="_blank" rel="noopener">FOMC statement, Sep 16, 2026</a></li>
+      <li><a href="https://finance.yahoo.com/economy/policy/articles/fed-extends-pause-management-purchases-191645572.html" target="_blank" rel="noopener">Yahoo Finance: purchase pause and what banks expected (secondary source)</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/repo-agreement-ops-faq" target="_blank" rel="noopener">New York Fed, standing repo FAQ</a></li>
+      <li><a href="https://www.newyorkfed.org/markets/rrp-counterparty-expectations-requirements-2021" target="_blank" rel="noopener">New York Fed, reverse repo counterparty eligibility</a></li>
+      <li><a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20251029a1.htm" target="_blank" rel="noopener">Implementation note, Oct 29, 2025 (standing repo rate 4.00%)</a></li>
+      <li><a href="https://markets.newyorkfed.org/api/rates/secured/sofr/search.json?startDate=2025-10-28&amp;endDate=2025-11-03" target="_blank" rel="noopener">New York Fed SOFR data, Oct 28–Nov 3, 2025</a></li>
+      <li><a href="https://www.brookings.edu/articles/what-is-the-repo-market-and-why-does-it-matter/" target="_blank" rel="noopener">Brookings on the September 2019 repo spike</a></li>
+      <li><a href="https://www.federalreserve.gov/econres/notes/feds-notes/the-recent-evolution-of-the-federal-funds-market-and-its-dynamics-during-reductions-of-fr-balance-sheet-20240711.html" target="_blank" rel="noopener">Fed note on the fed funds market, Jul 2024</a></li>
+      <li><a href="https://www.financialresearch.gov/the-ofr-blog/2015/10/29/seasonality-in-repo-markets-described-in-latest-working-paper/" target="_blank" rel="noopener">OFR on quarter-end repo seasonality</a></li>
+      <li><a href="https://news.bgov.com/banking-law/dealers-rebuff-ny-fed-as-it-urges-use-of-facility-to-ease-strain" target="_blank" rel="noopener">Bloomberg, Nov 19, 2025: dealers and standing repo stigma</a></li>
+      <li><a href="https://news.bloomberglaw.com/banking-law/fed-reverse-repo-facility-use-jumps-to-record-2-55-trillion-1" target="_blank" rel="noopener">Reverse repo record $2.554T, Dec 30, 2022 (secondary source)</a></li>
+      <li><a href="https://www.federalreserve.gov/releases/h41/20230316/" target="_blank" rel="noopener">Fed H.4.1, Mar 16, 2023 (discount window peak)</a></li>
+      <li><a href="https://www.federalreserve.gov/releases/h41/20251204/" target="_blank" rel="noopener">Fed H.4.1, Dec 4, 2025 (reserves before bill buying)</a></li>
+      <li><a href="https://business.purdue.edu/daniels-insights/posts/2026/twinkle-twinkle-r-star.php" target="_blank" rel="noopener">Purdue review of r-star estimates, 2026 (secondary source)</a></li>
+    </ul>
+  </details>
+  <p>Not every figure on the page comes from a government agency: the r-star range and the reverse repo record are cited from the secondary sources named above.</p>
+  <p id="foot-note"></p>
+</footer>
+
+</div>
+
+<script>
+// ===== DATA BLOCKS (rewritten by scripts/update.py; one line each) =====
+const DATA = {"updated":"2026-10-20","h41":{"release":"2026-10-15","wed":"2026-10-14","t1":{"reserves":[3022140,-7519,3112,3030854],"tga":[883373,3120,73780,885823],"rrp":[332191,2665,-21783,326799],"rrpForeign":[331904,3607,-17785,326598],"rrpOthers":[287,-943,-3998,201],"loans":[11350,3606,5148,11081],"primary":[11312,3611,5230,11044],"repo":[1,0,-2392,1],"held":[6470368,5040,185272,6471059],"ust":[4569911,5019,373157,4570552],"bills":[565492,4725,369999,566048],"mbs":[1898110,21,-187885,1898160]},"assets":[6755639,8079,159185]},"dts":{"date":"2026-10-16","close":948492},"pce":{"month":"2026-08","v":3.0}};
+const WEEKS = {"dates":["2026-06-24","2026-07-01","2026-07-08","2026-07-15","2026-07-22","2026-07-29","2026-08-05","2026-08-12","2026-08-19","2026-08-26","2026-09-02","2026-09-09","2026-09-16","2026-09-23","2026-09-30","2026-10-07","2026-10-14"],"res":[2951416,2966897,3098911,3142721,3062149,2984570,2993349,2944059,2935287,2924936,2894531,2991310,3013794,2930193,2948090,3029659,3022140],"tga":[918696,880237,774062,756218,829623,910776,907324,963950,953612,950736,967935,883335,877028,977084,948674,880253,883373],"assets":[6735645,6724564,6735609,6743028,6747378,6738190,6748567,6759955,6745699,6730912,6737204,6740619,6746548,6747704,6743031,6747560,6755639],"rrp":[4534,1001,3347,151,376,2576,1650,725,317,702,525,432,5375,461,11539,2338,201]};
+const RATES = {"dates":["2026-10-02","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-13","2026-10-14","2026-10-15","2026-10-16"],"sofr":[3.88,3.89,3.9,3.88,3.87,3.87,3.89,3.88,3.89,3.88],"effr":[3.88,3.88,3.88,3.88,3.88,3.88,3.88,3.88,3.88,3.88],"iorb":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9]};
+const OPS = {"dates":["2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-19"],"srf":[2,0,2,3,1,0,1,111,0,11],"rrp":[1004,414,2338,335,300,275,201,1201,100,330]};
+const POLICY = {"asof":"2026-10-19","lo":3.75,"hi":4.0,"iorb":3.9,"srf":4.0,"rrp":3.75,"move":{"date":"2026-09-16","bp":25},"rmp":{"from":"2026-10-15","to":"2026-11-13","rmp":0,"reinv":14.6,"announced":"2026-10-14"},"fomc":[["2026-10-27","2026-10-28"],["2026-12-08","2026-12-09"]]};
+const CAL = [{"d":"2026-10-22","t":"4:30 pm","ev":"H.4.1 balance sheet, week of Oct 21","src":"Federal Reserve","id":"h41"},{"d":"2026-10-28","t":"2:00 pm","ev":"FOMC decision","src":"Federal Reserve","id":"fomc"},{"d":"2026-10-29","t":"8:30 am","ev":"Personal income and outlays, September (core PCE)","src":"BEA","id":"pce"},{"d":"2026-10-29","t":"4:30 pm","ev":"H.4.1 balance sheet, week of Oct 28","src":"Federal Reserve","id":"h41"},{"d":"2026-10-30","t":"all day","ev":"Last business day of October; month-ends can push repo rates up for a day","src":"Calendar","id":"me"},{"d":"2026-11-05","t":"4:30 pm","ev":"H.4.1 balance sheet, week of Nov 4","src":"Federal Reserve","id":"h41"},{"d":"2026-11-13","t":"by this date","ev":"Current purchase period ends; next monthly purchase plan due (release date not posted)","src":"New York Fed","id":"rmp"}];
+const LOG = [["Bank reserves","$3.02T","Wk ending Oct 14","Fed H.4.1","Oct 20","Seeded. Oct 15 release read; Jun 24–Oct 7 weeks match the FRED-based values on the old page."],["Treasury General Account","$883B","Wk ending Oct 14","Fed H.4.1; Treasury DTS","Oct 20","Seeded. Wednesday level $885,823M ties to the DTS Oct 15 opening balance."],["Treasury account, daily","$948B","Oct 16","Treasury DTS","Oct 20","Seeded. Single source."],["Overnight reverse repo","$0.3B","Oct 19","NY Fed operation results","Oct 20","Seeded. Wednesday values tie to H.4.1 (Oct 14: $201M)."],["Fed total assets, y/y","+$159B","Oct 14","Fed H.4.1 Table 5","Oct 20","Seeded. Weekly changes tie across 17 releases."],["Net liquidity, 13-wk change","−$115B","Jul 15 → Oct 14","Computed from Fed H.4.1","Oct 20","Seeded. Computed: assets − TGA − reverse repo."],["SOFR minus IORB","−2bp","Oct 16","NY Fed SOFR; Fed IORB","Oct 20","Seeded. SOFR Oct 13–15 matches FRED."],["Fed funds minus IORB","−2bp","Oct 16","NY Fed EFFR","Oct 20","Seeded. Single source."],["Standing repo facility usage","$0.011B","Oct 19","NY Fed operation results","Oct 20","Seeded. Single source; Wednesday values tie to H.4.1."],["Fed loans to banks","$11.4B","Wk ending Oct 14","Fed H.4.1","Oct 20","Seeded. Weekly change ties to the prior release."],["Real fed funds rate","+0.9%","EFFR Oct 16; core PCE Aug","NY Fed; BEA","Oct 20","Core PCE carried over from the old page, not re-checked."],["Fed funds target range","3.75–4.00%","Oct 16","NY Fed EFFR data","Oct 20","Seeded. Single source."],["IORB","3.90%","Oct 19","Fed IORB (read via FRED)","Oct 20","Seeded. Fed release file not yet read."],["Standing repo rate","4.00%","Oct 19","NY Fed operation results","Oct 20","Seeded."],["Overnight reverse repo rate","3.75%","Oct 19","NY Fed operation results","Oct 20","Seeded."],["Treasury bills held, y/y","+$370B","Wk ending Oct 14","Fed H.4.1","Oct 20","Seeded."],["Mortgage bonds held, y/y","−$188B","Wk ending Oct 14","Fed H.4.1","Oct 20","Seeded."],["Reserve management purchases","None planned to Nov 13","Announced Oct 14","NY Fed purchase schedule","Oct 20","Seeded. Schedule sentence read Oct 20."],["Next FOMC meeting","Oct 27–28","2026 calendar","Fed FOMC calendar","Oct 20","Seeded."]];
+const NOTES = [{"date":"2026-10-14","title":"Bill purchases paused for a third month","text":"The New York Fed said it plans no reserve management purchases from Oct 15 to Nov 13, only about $14.6B of reinvestment purchases. Purchases were halted in August, so this is the third monthly period in a row without them. Before the announcement some banks (Wells Fargo, Bank of America) had expected a restart in mid-October (Yahoo Finance)."},{"date":"2026-10-06","title":"Quarter-end passed, with one wobble","text":"SOFR was 3.90% on Sep 30, level with IORB, and fell to 3.87% on Oct 1: the date passed and the rate dropped back. It matched IORB again on Oct 6, an ordinary day, then eased to 3.87% on Oct 8 and 9."},{"date":"2026-09-16","title":"September rate increase","text":"The FOMC raised the target range 25bp to 3.75–4.00%, unanimously, citing elevated inflation (FOMC statement, Sep 16)."}];
+const AUDIT = {"done":"2026-10-18","next":"2026-11-18","note":"Time-bound sentences were turned into automatic lines on Oct 20, 2026."};
+// ===== END DATA BLOCKS =====
+
+// ---- Page logic. Everything below is drawn from the data blocks above. ----
+const $ = id => document.getElementById(id);
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num = v => typeof v === "number" && isFinite(v);
+const f = (v, dp = 2) => num(v) ? v.toFixed(dp) : "n/a";
+const last = a => a[a.length - 1];
+const lastNum = a => { for (let i = a.length - 1; i >= 0; i--) if (num(a[i])) return [a[i], i]; return [null, -1]; };
+function dLabel(s, withYear) {
+  if (!s) return "n/a";
+  let m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (m) return MON[+m[2] - 1] + " " + (+m[3]) + (withYear ? ", " + m[1] : "");
+  m = /^(\d{4})-(\d{2})$/.exec(s);
+  if (m) return MON[+m[2] - 1] + " " + m[1];
+  return s;
+}
+const md = s => { const m = /^\d{4}-(\d{2})-(\d{2})$/.exec(s); return m ? (+m[1]) + "/" + (+m[2]) : s; };
+const daysBetween = (a, b) => Math.round((new Date(b + "T12:00:00Z") - new Date(a + "T12:00:00Z")) / 864e5);
+// Money: data are in $ millions
+const B = v => num(v) ? v / 1e3 : null;            // $M -> $B
+const T = v => num(v) ? v / 1e6 : null;            // $M -> $T
+const usdB = (m, dp = 0) => num(m) ? "$" + (m / 1e3).toFixed(dp) + "B" : "n/a";
+const usdT = (m, dp = 2) => num(m) ? "$" + (m / 1e6).toFixed(dp) + "T" : "n/a";
+const sgnB = (m, dp = 0) => num(m) ? (m >= 0 ? "+" : "−") + "$" + Math.abs(m / 1e3).toFixed(dp) + "B" : "n/a";
+const bpS = v => num(v) ? (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v) + "bp" : "n/a";
+const toBp = (a, b) => num(a) && num(b) ? Math.round((a - b) * 100) : null;
+
+// ---------- Derived values ----------
+const H = DATA.h41, t1 = H.t1, W = WEEKS, n = W.dates.length;
+const netliq = W.dates.map((_, i) => num(W.assets[i]) && num(W.tga[i]) && num(W.rrp[i]) ? W.assets[i] - W.tga[i] - W.rrp[i] : null);
+const nlNow = netliq[n - 1], nlPrev = n > 1 ? netliq[n - 2] : null, nl13 = n > 13 ? netliq[n - 14] : null, nl13d = n > 13 ? W.dates[n - 14] : null;
+const [sofr, si] = lastNum(RATES.sofr), [effr, ei] = lastNum(RATES.effr);
+const sofrD = si >= 0 ? RATES.dates[si] : null, effrD = ei >= 0 ? RATES.dates[ei] : null;
+const iorbAt = i => num(RATES.iorb[i]) ? RATES.iorb[i] : POLICY.iorb;
+const gapS = si >= 0 ? toBp(sofr, iorbAt(si)) : null, gapE = ei >= 0 ? toBp(effr, iorbAt(ei)) : null;
+const [srf, oi] = lastNum(OPS.srf), [onrrp, ri] = lastNum(OPS.rrp);
+const srfD = oi >= 0 ? OPS.dates[oi] : null, rrpD = ri >= 0 ? OPS.dates[ri] : null;
+const realRate = num(effr) && num(DATA.pce.v) ? effr - DATA.pce.v : null;
+const R = POLICY.rmp;
+const nextFomc = POLICY.fomc.find(m => m[1] >= DATA.updated) || null;
+const fomcLabel = m => { if (!m) return "n/a"; const a = m[0].split("-"), b = m[1].split("-"); return MON[+a[1] - 1] + " " + (+a[2]) + "–" + (a[1] === b[1] ? "" : MON[+b[1] - 1] + " ") + (+b[2]); };
+const rmpText = () => num(R.rmp) ? (R.rmp > 0 ? `about $${f(R.rmp, 1)}B of reserve management purchases` : "no reserve management purchases") : "reserve management purchases not known";
+
+// ---------- Tile rules (fixed; printed in each tile) ----------
+const LABEL = { good: "Ample", warn: "Tightening", crit: "Stressed", none: "Not known" };
+function status(ind) { if (!num(ind.value)) return "none"; for (const [to, s] of ind.zones) { if (ind.value < to) return s; } return last(ind.zones)[1]; }
+const IND = [
+  { g: "bs", name: "Bank reserves", value: T(t1.reserves[0]), fmt: v => "$" + v.toFixed(2), unit: "T", asof: "Week ending " + dLabel(H.wed), min: 2.5, max: 3.5, zones: [[2.85, "crit"], [3.0, "warn"], [Infinity, "good"]],
+    desc: `Week average ${usdT(t1.reserves[0])}, ${sgnB(t1.reserves[1])} on the week and ${sgnB(t1.reserves[2])} on the year. Wednesday ${dLabel(H.wed)} level ${usdT(t1.reserves[3])}.`,
+    what: "The cash banks keep at the Fed. Too little and overnight funding gets expensive and erratic, as in the 2019 repo spike.",
+    rule: "Amber below $3.0T. Red below $2.85T, about where reserves stood ($2.86T, week of Dec 3, 2025) just before bill buying began." },
+  { g: "bs", name: "Treasury General Account", value: B(t1.tga[0]), fmt: v => "$" + v.toFixed(0), unit: "B", asof: "Week ending " + dLabel(H.wed), min: 600, max: 1100, zones: [[900, "good"], [1000, "warn"], [Infinity, "crit"]],
+    desc: `Week average, ${sgnB(t1.tga[1])} on the week. Wednesday ${dLabel(H.wed)} level ${usdB(t1.tga[3])}. Daily Treasury Statement: ${usdB(DATA.dts.close)} at the close on ${dLabel(DATA.dts.date)}.`,
+    what: "The government's checking account. When it grows, cash leaves bank reserves; when the Treasury spends it down, cash flows back.",
+    rule: "Amber at $900B or more, red at $1,000B or more. A higher balance drains reserves." },
+  { g: "bs", name: "Overnight reverse repo", value: B(onrrp), fmt: v => "$" + v.toFixed(1), unit: "B", asof: dLabel(rrpD), min: 0, max: 500, zones: [[50, "warn"], [Infinity, "good"]], lab: { warn: "Empty", good: "Buffer" },
+    desc: `${usdB(onrrp, 1)} on ${dLabel(rrpD)} (New York Fed operation). The foreign official pool, a separate account, was ${usdB(t1.rrpForeign[3])} on Wednesday ${dLabel(H.wed)} (H.4.1).`,
+    what: "Spare cash money funds park at the Fed overnight. It hit a record $2.55T on Dec 30, 2022. Near zero, it no longer cushions swings in the Treasury's account.",
+    rule: "Amber (Empty) below $50B. When it's full, it absorbs TGA swings instead of reserves." },
+  { g: "bs", name: "Fed total assets, y/y", value: B(H.assets[2]), fmt: v => (v >= 0 ? "+$" : "−$") + Math.abs(v).toFixed(0), unit: "B", asof: "Wednesday " + dLabel(H.wed), min: -600, max: 400, zones: [[-200, "crit"], [0, "warn"], [Infinity, "good"]],
+    desc: `${usdT(H.assets[0])} total, ${sgnB(H.assets[1])} on the week. Bills ${sgnB(t1.bills[2])} and mortgage bonds ${sgnB(t1.mbs[2])} on the year (week averages); reserves ${sgnB(t1.reserves[2])}.`,
+    what: "Everything the Fed owns, mainly Treasuries and mortgage bonds. Buying assets creates reserves; letting them mature destroys reserves.",
+    rule: "Amber below zero, red below −$200B. Growth adds reserves unless the Treasury's account or reverse repo absorbs it. Shrinking usually means QT, though repaid Fed loans shrink it too." },
+  { g: "bs", name: "Net liquidity, 13-wk change", value: num(nlNow) && num(nl13) ? Math.round(B(nlNow - nl13)) : null, fmt: v => (v >= 0 ? "+$" : "−$") + Math.abs(v).toFixed(0), unit: "B", asof: dLabel(nl13d) + " → " + dLabel(W.dates[n - 1]), min: -400, max: 300, zones: [[-200, "crit"], [-25, "warn"], [Infinity, "good"]],
+    desc: `${usdT(nlNow, 3)} now, ${sgnB(num(nlNow) && num(nlPrev) ? nlNow - nlPrev : null)} on the week. 13 weeks earlier (${dLabel(nl13d)}) it was ${usdT(nl13, 3)}.`,
+    what: "A trader shorthand for cash available to markets: what the Fed has put in, minus what the Treasury and reverse repo have pulled out.",
+    rule: "Amber below −$25B, red below −$200B over 13 weeks. Fed assets minus TGA minus reverse repo." },
+  { g: "mm", name: "SOFR minus IORB", value: gapS, fmt: v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(0), unit: "bp", asof: dLabel(sofrD), min: -15, max: 20, zones: [[0, "good"], [5, "warn"], [Infinity, "crit"]],
+    desc: (() => { const k = RATES.dates.filter((d, i) => num(RATES.sofr[i]) && RATES.sofr[i] >= iorbAt(i)); return `SOFR ${f(sofr)}%, IORB ${f(iorbAt(si))}% on ${dLabel(sofrD)}. At or above IORB on ${k.length} of the last ${RATES.dates.length} business days${k.length ? " (" + k.map(d => dLabel(d)).join(", ") + ")" : ""}.`; })(),
+    what: "Compares the market rate for overnight secured loans with what the Fed pays on reserves. Above zero on ordinary days suggests cash is scarce enough that lenders can charge a premium. A day or two above around month-ends, quarter-ends and tax dates is common.",
+    rule: "Amber at or above IORB, red 5bp or more above. Several ordinary days above IORB signal scarce cash; single days around month- and quarter-ends often pass." },
+  { g: "mm", name: "Fed funds minus IORB", value: gapE, fmt: v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(0), unit: "bp", asof: dLabel(effrD), min: -15, max: 20, zones: [[0, "good"], [5, "warn"], [Infinity, "crit"]],
+    desc: (() => { const vals = RATES.effr.filter(num), same = vals.length && vals.every(v => v === effr); return `EFFR ${f(effr)}% on ${dLabel(effrD)}, ${bpS(toBp(effr, POLICY.lo)).replace("+", "")} above the bottom of the ${f(POLICY.lo)}–${f(POLICY.hi)}% range.` + (same ? ` The same on all ${vals.length} business days shown.` : ` Range over the last ${vals.length} business days: ${f(Math.min(...vals))}–${f(Math.max(...vals))}%.`); })(),
+    what: "Same test using the unsecured bank-to-bank rate the Fed targets. Normally sits a few basis points under IORB.",
+    rule: "Amber at or above IORB, red 5bp or more above. Fed funds drifting up toward IORB and the top of the range is a warning." },
+  { g: "mm", name: "Standing repo facility usage", value: B(srf), fmt: v => "$" + (v < 0.1 ? v.toFixed(3) : v.toFixed(1)), unit: "B", asof: dLabel(srfD), min: 0, max: 60, zones: [[5, "good"], [25, "warn"], [Infinity, "crit"]],
+    desc: (() => { let mx = -1, mi = -1; OPS.srf.forEach((v, i) => { if (num(v) && v > mx) { mx = v; mi = i; } }); return `${usdB(srf, 3)} on ${dLabel(srfD)}, morning and afternoon operations combined. Highest in the last ${OPS.dates.length} business days: ${usdB(mx, 3)} on ${dLabel(OPS.dates[mi])}.`; })(),
+    what: "How much dealers and banks borrowed from the Fed's backstop. Near zero usually means they found cash in the market. Some dealers also avoid it because borrowing from the Fed carries a stigma (Bloomberg, Nov 2025), so low use alone does not prove all is well.",
+    rule: "Amber above $5B, red above $25B. Heavy use outside month- and quarter-ends means market repo costs as much as the Fed's rate or more." },
+  { g: "mm", name: "Fed loans to banks", value: B(t1.loans[0]), fmt: v => "$" + (Math.round(v * 10 + 1e-6) / 10).toFixed(1), unit: "B", asof: "Week ending " + dLabel(H.wed), min: 0, max: 60, zones: [[10, "good"], [30, "warn"], [Infinity, "crit"]],
+    desc: `Week average, ${sgnB(t1.loans[1], 1)} on the week. Primary credit ${usdB(t1.primary[0], 1)}. Wednesday ${dLabel(H.wed)} level ${usdB(t1.loans[3], 1)}.`,
+    what: "Mostly discount window lending (primary credit), where banks borrow from the Fed directly. Primary credit hit $152.9B on Mar 15, 2023, days after Silicon Valley Bank failed.",
+    rule: "Amber above $10B, red above $30B. A sharp jump usually means banks need emergency funding, as in March 2023." },
+  { g: "mm", name: "Real fed funds rate", value: num(realRate) ? Math.round(realRate * 10) / 10 : null, fmt: v => (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1), unit: "%", asof: "EFFR " + dLabel(effrD) + " − core PCE (" + dLabel(DATA.pce.month).slice(0, 3) + ")", min: -3, max: 3, zones: [[0, "good"], [1.5, "warn"], [Infinity, "crit"]], lab: { good: "Easy", warn: "Restrictive", crit: "Tight" },
+    desc: (() => { const nx = CAL.find(c => c.id === "pce" && c.d >= DATA.updated); return `EFFR ${f(effr)}% on ${dLabel(effrD)} minus core PCE inflation of ${f(DATA.pce.v, 1)}% for the year to ${dLabel(DATA.pce.month)}.` + (nx ? ` Next PCE release ${dLabel(nx.d)}.` : ""); })(),
+    what: "The policy rate minus inflation. Whether a positive reading slows the economy depends on the neutral real rate, which can only be estimated. New York Fed models put it near 0.8% (HLW) to 1.4% (LW) in recent years, per a 2026 Purdue review, so a reading near +1% may be close to neutral.",
+    rule: "Colors use simple cutoffs: amber above 0, red above 1.5. Zero is a rough line, not the neutral rate." }
+];
+const ST = {};
+IND.forEach(ind => { ind.st = status(ind); ind.lab2 = (ind.lab && ind.lab[ind.st]) || LABEL[ind.st]; ST[ind.name] = ind; });
+
+// ---------- Header pills ----------
+$("p-h41").textContent = "week of " + dLabel(H.wed, true);
+$("p-rates").textContent = dLabel(sofrD, true);
+$("p-upd").textContent = dLabel(DATA.updated, true);
+
+// ---------- Policy and rates strip ----------
+const tape = [
+  ["Fed funds target range", f(POLICY.lo) + "–" + f(POLICY.hi) + "%", POLICY.move ? `Last move ${bpS(POLICY.move.bp)} on ${dLabel(POLICY.move.date, true)}` : "", effrD, 5],
+  ["Interest on reserves (IORB)", f(POLICY.iorb) + "%", "Set by the Fed · " + dLabel(POLICY.asof), POLICY.asof, 5],
+  ["Standing repo rate (ceiling)", f(POLICY.srf) + "%", "Minimum bid rate · " + dLabel(POLICY.asof), POLICY.asof, 5],
+  ["Reverse repo rate (floor)", f(POLICY.rrp) + "%", "Offering rate · " + dLabel(POLICY.asof), POLICY.asof, 5],
+  ["SOFR", f(sofr) + "%", `${bpS(gapS)} vs IORB · ${dLabel(sofrD)}`, sofrD, 5],
+  ["Fed funds (EFFR)", f(effr) + "%", `${bpS(gapE)} vs IORB · ${dLabel(effrD)}`, effrD, 5],
+  ["Bank reserves", usdT(t1.reserves[0]), "Week average · " + dLabel(H.wed), H.wed, 9],
+  ["Treasury account", usdB(t1.tga[0]), "Week average · " + dLabel(H.wed), H.wed, 9],
+  ["Bill purchases", num(R.rmp) ? (R.rmp > 0 ? "$" + f(R.rmp, 1) + "B" : "Paused") : "n/a", `Reserve management, ${dLabel(R.from)}–${dLabel(R.to)}`, R.announced, 40],
+  ["Next FOMC meeting", fomcLabel(nextFomc), nextFomc ? "Decision " + dLabel(nextFomc[1]) + ", 2:00 pm" : "Not loaded", null, 0]
+];
+$("tape").innerHTML = tape.map(([k, v, d, dt, lim]) => {
+  const old = dt && lim && daysBetween(dt, DATA.updated) > lim;
+  return `<div class="stat${old ? " stale" : ""}"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span><span class="d${old ? " warnd" : ""}">${esc(d)}${old ? " · not updated" : ""}</span></div>`;
+}).join("");
+
+// ---------- Tiles ----------
+function gauge(ind) {
+  const Wd = 300, y = 6, h = 10, span = ind.max - ind.min, x = v => Math.max(0, Math.min(Wd, (v - ind.min) / span * Wd));
+  const Z = { good: "var(--zg)", warn: "var(--zw)", crit: "var(--zc)" };
+  let from = ind.min, s = "";
+  for (const [to, st] of ind.zones) { const a = x(from), b = x(Math.min(to, ind.max)); if (b > a) s += `<rect x="${a}" y="${y}" width="${b - a}" height="${h}" fill="${Z[st]}"/>`; from = to; if (to >= ind.max) break; }
+  if (num(ind.value)) { const mx = x(ind.value); s += `<rect x="${Math.max(0, Math.min(Wd - 4, mx - 2))}" y="1" width="4" height="${h + 10}" rx="1" fill="var(--fg)"/>`; }
+  return `<svg viewBox="0 0 ${Wd} 24" preserveAspectRatio="none" aria-hidden="true">${s}</svg>`;
+}
+const tileHTML = o => `<div class="tile sig st-${o.st}"><div class="label">${esc(o.name)}</div><span class="st"><i></i>${esc(o.lab2)}</span>
+  <div class="value">${num(o.value) ? esc(o.fmt(o.value)) : "n/a"}<small>${esc(o.unit)}</small></div><span class="asof">${esc(o.asof)}</span>
+  <div class="gauge">${gauge(o)}<div class="gl"><span>${o.min}</span><span>${o.max}</span></div></div>
+  <div class="desc">${esc(o.desc)}</div><div class="rule">${esc(o.rule)}</div>
+  <details><summary>What it is</summary><p>${esc(o.what)}</p></details></div>`;
+$("bs").innerHTML = IND.filter(i => i.g === "bs").map(tileHTML).join("");
+$("mm").innerHTML = IND.filter(i => i.g === "mm").map(tileHTML).join("");
+
+// ---------- Current read (numbers only, generated) ----------
+const cnt = { good: 0, warn: 0, crit: 0 };
+IND.forEach(i => { if (cnt[i.st] !== undefined) cnt[i.st]++; });
+$("read").innerHTML = `<div class="eyebrow">Current read · automatic summary</div>
+<h2>Reserves ${usdT(t1.reserves[0])} (week to ${dLabel(H.wed)}), SOFR ${bpS(gapS)} vs IORB (${dLabel(sofrD)}), standing repo ${usdB(srf, 3)} (${dLabel(srfD)}). ${cnt.good} green, ${cnt.warn} amber, ${cnt.crit} red signals.</h2>
+<div class="cols">
+ <div><h3>Money markets</h3><p>SOFR ${f(sofr)}% and fed funds ${f(effr)}% on ${dLabel(sofrD)}, against IORB at ${f(POLICY.iorb)}%. Standing repo borrowing ${usdB(srf, 3)} and reverse repo ${usdB(onrrp, 1)} on ${dLabel(srfD)}.</p></div>
+ <div><h3>Balance sheet</h3><p>Week to ${dLabel(H.wed)} (H.4.1 released ${dLabel(H.release)}): reserves ${sgnB(t1.reserves[1])} and the Treasury account ${sgnB(t1.tga[1])} on the week. Fed assets ${usdT(H.assets[0])}, ${sgnB(H.assets[2])} on the year. Net liquidity ${usdT(nlNow, 3)}.</p></div>
+ <div><h3>Policy</h3><p>Target range ${f(POLICY.lo)}–${f(POLICY.hi)}%${POLICY.move ? `, last moved ${bpS(POLICY.move.bp)} on ${dLabel(POLICY.move.date)}` : ""}. ${num(R.rmp) && R.rmp > 0 ? "Bill purchases of about $" + f(R.rmp, 1) + "B" : "No bill purchases"} planned ${dLabel(R.from)}–${dLabel(R.to)}. Next FOMC ${fomcLabel(nextFomc)}.</p></div>
+</div>
+<div class="auto">Written by the page from the data blocks; no causes or forecasts. Hand-written context is under Notes.</div>`;
+$("primerRmp").textContent = `For ${dLabel(R.from)}–${dLabel(R.to)} the New York Fed plans ${rmpText()} (announced ${dLabel(R.announced, true)}).`;
+
+// ---------- Flow diagram (values match the tiles) ----------
+{
+  const box = (x, y, w, h, a, b, fill) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${fill}" stroke="var(--line)"/><text x="${x + w / 2}" y="${y + h / 2 - 2}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">${a}</text><text x="${x + w / 2}" y="${y + h / 2 + 15}" text-anchor="middle" font-size="11.5" fill="var(--muted)" font-family="IBM Plex Mono,monospace">${b}</text>`;
+  const arr = (x1, y1, x2, y2, lab, lx, ly, anc) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--pub)" stroke-width="2" marker-end="url(#ah)"/><text x="${lx}" y="${ly}" text-anchor="${anc || "middle"}" font-size="11" fill="var(--muted)">${lab}</text>`;
+  let s = `<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="var(--pub)"/></marker></defs>`;
+  s += box(150, 10, 160, 56, "Federal Reserve", "assets " + usdT(H.assets[0]), "var(--bg)");
+  s += box(150, 130, 160, 56, "Bank reserves", usdT(t1.reserves[0]), "var(--card)");
+  s += box(10, 232, 150, 56, "Treasury account", usdB(t1.tga[0]), "var(--card)");
+  s += box(300, 232, 150, 56, "Reverse repo", usdB(onrrp, 1), "var(--card)");
+  s += arr(230, 66, 230, 128, "buys bills → adds", 238, 102, "start");
+  s += arr(180, 186, 100, 230, "taxes, debt sales", 96, 212, "end");
+  s += arr(280, 186, 360, 230, "money funds", 364, 212, "start");
+  s += `<text x="230" y="222" text-anchor="middle" font-size="11" fill="var(--bad)" font-weight="600">both drain reserves</text>`;
+  $("flow").innerHTML = s;
+}
+
+// ---------- Charts ----------
+function dom(vals, step, pad = 0) {
+  const v = vals.filter(num); let lo = Math.floor((Math.min(...v) - pad) / step) * step, hi = Math.ceil((Math.max(...v) + pad) / step) * step;
+  if (hi - lo < step) hi = lo + step;
+  const ticks = []; for (let t = lo; t <= hi + 1e-9; t += step) ticks.push(+t.toFixed(4));
+  return { lo, hi, ticks };
+}
+// Reserves vs TGA (TGA inverted, right axis)
+{
+  const Wd = 560, Hh = 250, L = 44, Rm = 44, Tm = 14, Bm = 28, iw = Wd - L - Rm, ih = Hh - Tm - Bm;
+  const x = i => L + i * (iw / Math.max(n - 1, 1));
+  const rT = W.res.map(T), gT = W.tga.map(T);
+  const dr = dom(rT, 0.1, 0.02), dg = dom(gT, 0.1, 0.02);
+  const yr = v => Tm + (dr.hi - v) / (dr.hi - dr.lo) * ih, yt = v => Tm + (v - dg.lo) / (dg.hi - dg.lo) * ih;
+  let s = `<svg viewBox="0 0 ${Wd} ${Hh}" role="img" aria-label="Weekly bank reserves and Treasury General Account, ${dLabel(W.dates[0])} to ${dLabel(W.dates[n - 1])}"><g class="grid">`;
+  dr.ticks.forEach(t => { s += `<line x1="${L}" x2="${Wd - Rm}" y1="${yr(t)}" y2="${yr(t)}"/><text x="${L - 6}" y="${yr(t) + 4}" text-anchor="end" style="fill:var(--pub)">${t.toFixed(2)}</text>`; });
+  s += `</g>`;
+  dg.ticks.forEach(t => { s += `<text x="${Wd - Rm + 6}" y="${yt(t) + 4}" style="fill:var(--gov)">${t.toFixed(2)}</text>`; });
+  s += `<polyline points="${gT.map((v, i) => num(v) ? x(i) + "," + yt(v) : null).filter(Boolean).join(" ")}" fill="none" stroke="var(--gov)" stroke-width="2" stroke-dasharray="5 3"/>`;
+  s += `<polyline points="${rT.map((v, i) => num(v) ? x(i) + "," + yr(v) : null).filter(Boolean).join(" ")}" fill="none" stroke="var(--pub)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  const li = n - 1;
+  if (num(rT[li])) s += `<circle cx="${x(li)}" cy="${yr(rT[li])}" r="4.5" fill="var(--pub)" stroke="var(--card)" stroke-width="2"/><text class="vlab" x="${x(li) - 10}" y="${yr(rT[li]) - 10}" text-anchor="end" style="fill:var(--fg);font-weight:600">$${rT[li].toFixed(2)}T</text>`;
+  if (num(gT[li])) s += `<circle cx="${x(li)}" cy="${yt(gT[li])}" r="4" fill="var(--gov)" stroke="var(--card)" stroke-width="2"/>`;
+  W.dates.forEach((d, i) => { if (i % 2 === 0 || i === n - 1) s += `<text x="${x(i)}" y="${Hh - 8}" text-anchor="middle">${md(d)}</text>`; });
+  $("resChart").innerHTML = s + `</svg>`;
+  let opp = 0, pairs = 0, big = null;
+  for (let i = 1; i < n; i++) {
+    const dr1 = W.res[i] - W.res[i - 1], dt1 = W.tga[i] - W.tga[i - 1];
+    if (!num(dr1) || !num(dt1)) continue;
+    pairs++; if (dr1 * dt1 < 0) opp++;
+    if (!big || Math.abs(dt1) > Math.abs(big.dt)) big = { i, dt: dt1, dr: dr1 };
+  }
+  $("resAuto").textContent = `In ${opp} of the ${pairs} weekly changes shown they moved in opposite directions.` + (big ? ` The largest weekly swing in the Treasury's account was ${sgnB(big.dt)} in the week to ${dLabel(W.dates[big.i])}, when reserves moved ${sgnB(big.dr)}.` : "");
+  $("resNote").textContent = `Week averages, ${dLabel(W.dates[0])} to ${dLabel(W.dates[n - 1], true)}. The TGA axis is flipped so the two lines move together: when the Treasury's balance rises (line falls here), reserves drop. Source: Fed H.4.1, Table 1.`;
+}
+// Corridor
+{
+  const c = POLICY, Wd = 440, Hh = 250, Tm = 16, Bm = 20, x0 = 70, x1 = 250;
+  const lo = Math.min(c.rrp, c.lo, num(sofr) ? sofr : 99, num(effr) ? effr : 99) - 0.05, hi = Math.max(c.srf, c.hi, num(sofr) ? sofr : 0, num(effr) ? effr : 0) + 0.05;
+  const y = v => Tm + (hi - v) / (hi - lo) * (Hh - Tm - Bm);
+  let s = `<svg viewBox="0 0 ${Wd} ${Hh}" role="img" aria-label="Fed administered rates and market overnight rates"><rect x="${x0}" y="${y(c.hi)}" width="${x1 - x0}" height="${y(c.lo) - y(c.hi)}" fill="var(--grid)"/>`;
+  s += `<text x="${x0 + 8}" y="${y(c.hi) + 16}">target range</text>`;
+  for (let t = Math.ceil(lo * 20) / 20; t <= hi + 1e-9; t += 0.05) s += `<text x="${x0 - 8}" y="${y(t) + 4}" text-anchor="end" style="fill:var(--faint)">${t.toFixed(2)}</text><line x1="${x0 - 4}" x2="${x0}" y1="${y(t)}" y2="${y(t)}" stroke="var(--faint)"/>`;
+  [["Standing repo (ceiling)", c.srf, "var(--bad)"], ["IORB", c.iorb, "var(--pub)"], ["Reverse repo (floor)", c.rrp, "var(--good)"]].forEach(([nm, v, col]) => {
+    s += `<line x1="${x0}" x2="${x1}" y1="${y(v)}" y2="${y(v)}" stroke="${col}" stroke-width="2"/><text x="${x1 + 8}" y="${y(v) + 4}" style="fill:var(--fg)">${nm} <tspan style="fill:var(--muted)">${v.toFixed(2)}</tspan></text>`;
+  });
+  const mx = 160;
+  if (num(sofr)) s += `<circle cx="${mx - 40}" cy="${y(sofr)}" r="6" fill="var(--gov)"/><text class="vlab" x="${mx - 40}" y="${y(sofr) + 21}" text-anchor="middle" style="fill:var(--gov);font-weight:600">SOFR ${sofr.toFixed(2)}</text>`;
+  if (num(effr)) s += `<circle cx="${mx + 40}" cy="${y(effr)}" r="6" fill="var(--fg)"/><text class="vlab" x="${mx + 40}" y="${y(effr) + 21}" text-anchor="middle" style="fill:var(--fg);font-weight:600">EFFR ${effr.toFixed(2)}</text>`;
+  $("corridor").innerHTML = s + `</svg>`;
+  $("corAuto").textContent = `On ${dLabel(sofrD)} SOFR was ${f(sofr)}% (${bpS(gapS)} vs IORB) and fed funds ${f(effr)}% (${bpS(gapE)}). Tile status: SOFR ${ST["SOFR minus IORB"].lab2}, fed funds ${ST["Fed funds minus IORB"].lab2}.`;
+}
+// Net liquidity
+{
+  const Wd = 1000, Hh = 220, L = 50, Rm = 20, Tm = 18, Bm = 28, iw = Wd - L - Rm, ih = Hh - Tm - Bm;
+  const x = i => L + i * (iw / Math.max(n - 1, 1)), v = netliq.map(T), d = dom(v, 0.05, 0.02), y = t => Tm + (d.hi - t) / (d.hi - d.lo) * ih;
+  let s = `<svg viewBox="0 0 ${Wd} ${Hh}" role="img" aria-label="Net liquidity, weekly, ${dLabel(W.dates[0])} to ${dLabel(W.dates[n - 1])}"><g class="grid">`;
+  d.ticks.forEach(t => { s += `<line x1="${L}" x2="${Wd - Rm}" y1="${y(t)}" y2="${y(t)}"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${t.toFixed(2)}</text>`; });
+  s += `</g>`;
+  const pts = v.map((t, i) => num(t) ? x(i) + "," + y(t) : null).filter(Boolean);
+  s += `<polygon points="${x(0)},${y(d.lo)} ${pts.join(" ")} ${x(n - 1)},${y(d.lo)}" fill="var(--pub)" fill-opacity=".10"/><polyline points="${pts.join(" ")}" fill="none" stroke="var(--pub)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  const vv = v.filter(num), mxv = Math.max(...vv), mnv = Math.min(...vv), mi = v.indexOf(mxv);
+  s += `<text class="vlab" x="${x(mi)}" y="${y(mxv) - 8}" text-anchor="middle">$${mxv.toFixed(2)}T</text>`;
+  if (num(v[n - 1])) s += `<circle cx="${x(n - 1)}" cy="${y(v[n - 1])}" r="5" fill="var(--pub)" stroke="var(--card)" stroke-width="2"/><text class="vlab" x="${x(n - 1) - 12}" y="${y(v[n - 1]) - 10}" text-anchor="end" style="fill:var(--fg);font-weight:600">$${v[n - 1].toFixed(3)}T</text>`;
+  W.dates.forEach((dd, i) => { s += `<text x="${x(i)}" y="${Hh - 8}" text-anchor="middle">${md(dd)}</text>`; });
+  $("netChart").innerHTML = s + `</svg>`;
+  const ch = num(nlNow) && num(nlPrev) ? nlNow - nlPrev : null;
+  const dA = W.assets[n - 1] - W.assets[n - 2], dT = W.tga[n - 1] - W.tga[n - 2], dR = W.rrp[n - 1] - W.rrp[n - 2];
+  $("netAuto").textContent = `This week: ${sgnB(ch)}. Fed assets ${sgnB(dA)}, Treasury account ${sgnB(dT)} (a rise subtracts), reverse repo ${sgnB(dR, 1)}. The level sits ${Math.round((nlNow / 1e6 - mnv) / (mxv - mnv) * 100)}% of the way from the period's low to its high.`;
+  $("netNote").textContent = `$ trillions, weekly, ${dLabel(W.dates[0])} to ${dLabel(W.dates[n - 1], true)}. A market shorthand, not an official measure: total Fed assets minus the TGA minus overnight reverse repo. The range over these weeks is $${mnv.toFixed(3)}–${mxv.toFixed(3)}T; the latest is $${T(nlNow).toFixed(3)}T. Source: Fed H.4.1.`;
+}
+
+// ---------- What the numbers say (numbers generated; explanations fixed) ----------
+{
+  const cal = d => { const dt = new Date(d + "T12:00:00Z"), m = dt.getUTCMonth(), day = dt.getUTCDate();
+    const nx = new Date(dt); do { nx.setUTCDate(nx.getUTCDate() + 1); } while ([0, 6].includes(nx.getUTCDay()));
+    const pv = new Date(dt); do { pv.setUTCDate(pv.getUTCDate() - 1); } while ([0, 6].includes(pv.getUTCDay()));
+    if (nx.getUTCMonth() !== m) return [2, 5, 8, 11].includes(m) ? "quarter-end" : "month-end";
+    if (pv.getUTCMonth() !== m) return "month start";
+    if (day >= 14 && day <= 16) return "mid-month";
+    return ""; };
+  const rows = RATES.dates.map((d, i) => ({ d, g: toBp(RATES.sofr[i], iorbAt(i)), c: cal(d) })).filter(r => num(r.g));
+  const atOrd = rows.filter(r => r.g >= 0 && !r.c), atCal = rows.filter(r => r.g >= 0 && r.c);
+  const list = rows.map(r => `${dLabel(r.d)} ${bpS(r.g)}${r.c ? " (" + r.c + ")" : ""}`).join(", ");
+  const cards = [
+    ["The shock absorber", `Reverse repo ${usdB(onrrp, 1)} on ${dLabel(rrpD)}. Week to ${dLabel(H.wed)}: Treasury account ${sgnB(t1.tga[1])}, reverse repo (excluding foreign official) ${sgnB(t1.rrpOthers[1], 1)}, reserves ${sgnB(t1.reserves[1])} (week averages).`,
+      "The overnight reverse repo facility once held trillions (a record $2.55T on Dec 30, 2022). When it is near empty, swings in the Treasury's account land on bank reserves instead."],
+    ["Rates and the balance sheet", `Target range ${f(POLICY.lo)}–${f(POLICY.hi)}%${POLICY.move ? `, last moved ${bpS(POLICY.move.bp)} on ${dLabel(POLICY.move.date, true)}` : ""}. Fed assets ${sgnB(H.assets[2])} on the year; bills ${sgnB(t1.bills[2])}, mortgage bonds ${sgnB(t1.mbs[2])}.`,
+      "A rate move and a balance-sheet move are separate levers. Since December 2025 the Fed has put the money from maturing mortgage bonds into Treasury bills (implementation note, Oct 29, 2025), so the mix shifts toward bills even when purchases are paused."],
+    ["Calendar days and ordinary days", `SOFR versus IORB, last ${rows.length} business days: ${list}. At or above IORB on ${atOrd.length} ordinary day${atOrd.length === 1 ? "" : "s"} and ${atCal.length} calendar day${atCal.length === 1 ? "" : "s"}.`,
+      "Quarter-ends squeeze repo because dealers owned by foreign banks shrink their balance sheets for reporting day: their home regulators measure leverage at quarter-end, while U.S. rules use a quarter average (OFR). One day at IORB is not a signal. Several ordinary days there would be. Calendar flags use simple date rules and miss Treasury settlement days."],
+    ["Bill purchases", `New York Fed plan for ${dLabel(R.from)}–${dLabel(R.to, true)}: ${rmpText()}, plus about $${f(R.reinv, 1)}B of reinvestment purchases (announced ${dLabel(R.announced)}).`,
+      "Reinvestment purchases only replace maturing mortgage bonds, so they do not add reserves overall. Reserve management purchases do. They are a plumbing fix, not easing like QE."]
+  ];
+  $("readComm").innerHTML = cards.map(([h, a, b]) => `<div><h3>${esc(h)}</h3><p class="auto">${esc(a)}</p><p style="margin-top:4px">${esc(b)}</p></div>`).join("");
+}
+
+// ---------- Next events ----------
+{
+  const today = new Date().toISOString().slice(0, 10), ref = today > DATA.updated ? today : DATA.updated;
+  const dow = s => ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(s + "T12:00:00Z").getUTCDay()];
+  const LAST = {
+    h41: () => `Last: week of ${dLabel(H.wed)}, reserves ${usdT(t1.reserves[0])}.`,
+    fomc: () => `Target range now ${f(POLICY.lo)}–${f(POLICY.hi)}%.`,
+    pce: () => `Last core PCE: ${f(DATA.pce.v, 1)}% y/y (${dLabel(DATA.pce.month)}).`,
+    rmp: () => `Current plan: ${rmpText()}.`,
+    me: () => "", qe: () => ""
+  };
+  const rows = CAL.filter(c => c.d >= ref).slice(0, 8);
+  $("cal").innerHTML = rows.length ? rows.map(c => `<div><span class="when">${dow(c.d)} ${dLabel(c.d)} · ${esc(c.t)}</span><span class="ev">${esc(c.ev)}</span><span class="why">${esc(c.src)}. ${esc((LAST[c.id] || (() => ""))())}</span></div>`).join("")
+    : `<div><span class="why">No scheduled events are loaded for the coming days. The update script refreshes this list.</span></div>`;
+}
+
+// ---------- Notes (hand-written, dated) ----------
+{
+  const ns = NOTES.slice().sort((a, b) => a.date < b.date ? 1 : -1);
+  $("notes").innerHTML = ns.length ? ns.map(x => { const age = daysBetween(x.date, DATA.updated);
+    return `<div class="n"><div class="eyebrow">${dLabel(x.date, true)}${age > 14 ? ` · <span class="old">${age} days old</span>` : ""}</div><h3 style="font-size:14px;margin-top:2px">${esc(x.title)}</h3><p>${esc(x.text)}</p></div>`; }).join("")
+    : `<p class="sub">No notes yet.</p>`;
+}
+
+// ---------- Data check log ----------
+$("log").innerHTML = `<colgroup><col style="width:22%"><col style="width:12%"><col style="width:13%"><col style="width:19%"><col style="width:8%"><col></colgroup><thead><tr><th>Indicator</th><th>Value</th><th>Data date</th><th>Source</th><th>Checked</th><th>Result</th></tr></thead><tbody>` +
+  LOG.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("") + "</tbody>";
+{
+  const over = DATA.updated > AUDIT.next;
+  $("logNote").innerHTML = `Explanations audited ${esc(dLabel(AUDIT.done, true))}. ${esc(AUDIT.note || "")} Next audit ${esc(dLabel(AUDIT.next, true))}.` + (over ? ` <span style="color:var(--bad)">The audit is overdue.</span>` : "");
+}
+$("foot-note").textContent = `Data blocks last written ${dLabel(DATA.updated, true)}.`;
+
+// ---------- SOFR vs IORB explainer: reads the blocks only ----------
+{
+  const c = POLICY, ind = ST["SOFR minus IORB"], now = $("sofrNow"), bar = $("sofrLadder");
+  now.innerHTML = `<b>Latest reading, ${esc(dLabel(sofrD, true))}:</b><span class="num">SOFR ${f(sofr)}% vs IORB ${f(iorbAt(si))}% = ${num(gapS) ? ind.fmt(gapS) : "n/a"}bp</span><span class="st-${ind.st}"><span class="st"><i></i>${esc(ind.lab2)}</span></span>`;
+  const vals = [c.rrp, c.srf].concat(num(sofr) ? [sofr] : [], num(effr) ? [effr] : []);
+  const lo = Math.min(...vals) - 0.02, hi = Math.max(...vals) + 0.02, p = v => Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100));
+  const a = p(c.iorb), b = p(c.iorb + 0.05);
+  let h = `<i style="width:${a}%;background:var(--zg)"></i><i style="width:${b - a}%;background:var(--zw)"></i><i style="width:${100 - b}%;background:var(--zc)"></i>`;
+  h += `<span class="tk" style="left:${p(c.rrp)}%">Floor ${c.rrp.toFixed(2)}</span><span class="tk r" style="left:${a}%">IORB ${c.iorb.toFixed(2)}</span><span class="tk r" style="left:${p(c.srf)}%">Ceiling ${c.srf.toFixed(2)}</span>`;
+  if (num(sofr)) h += `<span class="mk hi" style="left:${p(sofr)}%;background:var(--gov)"><span style="color:var(--gov)">SOFR ${sofr.toFixed(2)}</span></span>`;
+  if (num(effr)) h += `<span class="mk" style="left:${p(effr)}%;background:var(--fg)"><span style="color:var(--fg)">EFFR ${effr.toFixed(2)}</span></span>`;
+  bar.innerHTML = h;
+}
+</script>
+</body>
+</html>
