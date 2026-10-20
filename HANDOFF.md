@@ -157,7 +157,7 @@ Checked Oct 19–20, 2026 through a web reader (not from a GitHub runner, and th
 
 ## Alerts (replace the Claude messages)
 
-A script can't message the owner in Claude, so GitHub issues do it. GitHub emails a new issue (and comments) to anyone watching the repo. The owner must set the repo's Watch to "All activity" or "Custom → Issues".
+A script can't message the owner in Claude, so GitHub issues do it. **Assign every alert and data-problem issue to the repository owner** (`gh issue create --assignee "$GITHUB_REPOSITORY_OWNER"`, and `gh issue edit --add-assignee` on an existing open issue). Being assigned subscribes the owner, so GitHub emails the new issue and later comments without the owner having to watch the repo. Never write the owner's username into a file; read it from `$GITHUB_REPOSITORY_OWNER` at run time.
 
 Compute the ten tile statuses in Python with the same zones as `IND` in the page, and add a test that runs the page's `status()` via Node on the seed and on a few fixtures and gets the same answers.
 
@@ -171,7 +171,7 @@ Compute the ten tile statuses in Python with the same zones as `IND` in the page
 | Reserves move | abs(week-average change) > $100,000M | `Alert: Reserves moved <±$xB> in week of <date>` | new issue each time |
 | Data problem | any failed check, null, or source not parsed when it has a new date | `Data update needs attention` | as in the Yield repo |
 
-Dropped from the Claude task: the "a source failed or a value was not updated" message, now covered by the data-problem issue. Label alert issues `alert`. A dry run lists the alerts it would open but opens none.
+Dropped from the Claude task: the "a source failed or a value was not updated" message, now covered by the data-problem issue. Label alert issues `alert`. Apply the same assignee rule to the "Data update needs attention" issue (the Yield repo's workflow does not assign it; add that here). A dry run lists the alerts it would open but opens none.
 
 ## Dry run
 
