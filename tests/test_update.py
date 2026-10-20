@@ -415,6 +415,9 @@ class FakeGitHub:
         self.calls.append(("create", title))
         return {"number": 99}
 
+    def assign(self, n):
+        self.calls.append(("assign", n))
+
     def comment(self, n, body):
         self.calls.append(("comment", n))
 
@@ -430,7 +433,7 @@ def test_alerts_apply():
           {"kind": "sticky", "title": "Alert: Standing repo usage above $25B", "on": True, "body": "w"},
           {"kind": "sticky", "title": "Alert: Standing repo usage above $25B", "on": False, "body": "v"}]
     done = alerts_mod.apply(al, gh)
-    assert gh.calls == [("label",), ("create", "Alert: Fed policy change (2026-10-29)"), ("comment", 7),
+    assert gh.calls == [("label",), ("create", "Alert: Fed policy change (2026-10-29)"), ("assign", 7), ("comment", 7),
                         ("comment", 8), ("close", 8), ("create", "Alert: Standing repo usage above $25B"),
                         ("comment", 99), ("close", 99)]
     assert len(done) == 5
@@ -452,3 +455,27 @@ def test_no_emails_or_session_links_in_repo():
         if email.search(t) or ("claude" + ".ai/") in t:
             bad.append(f)
     assert bad == []
+
+
+class FakeSession:
+    def __init__(self):
+        self.headers, self.sent = {}, []
+
+    def request(self, method, url, **kw):
+        self.sent.append((method, url.split("/repos/o/r")[1], kw.get("json")))
+
+        class R:
+            status_code, content = 200, b"{}"
+
+            def json(self):
+                return {"number": 5}
+        return R()
+
+
+def test_alert_issues_assigned_to_owner():
+    s = FakeSession()
+    gh = alerts_mod.GitHub("o/r", "t", "owner-from-env", session=s)
+    gh.create("Alert: x", "b")
+    gh.assign(3)
+    assert s.sent[0] == ("POST", "/issues", {"title": "Alert: x", "body": "b", "labels": ["alert"], "assignees": ["owner-from-env"]})
+    assert s.sent[1] == ("POST", "/issues/3/assignees", {"assignees": ["owner-from-env"]})

@@ -6,7 +6,9 @@ Kinds:
 - sticky: one open issue per title. on=true: comment on the open issue, or open one; on=false: comment
   and close the open issue if there is one (SOFR/EFFR above IORB, standing repo usage).
 
-All alert issues carry the label `alert`. Uses the GitHub REST API with GITHUB_TOKEN and GITHUB_REPOSITORY.
+All alert issues carry the label `alert` and are assigned to the repository owner (read from
+GITHUB_REPOSITORY_OWNER at run time; being assigned subscribes the owner to the issue and its comments).
+Uses the GitHub REST API with GITHUB_TOKEN and GITHUB_REPOSITORY.
 """
 from __future__ import annotations
 
@@ -21,9 +23,9 @@ LABEL = "alert"
 
 
 class GitHub:
-    def __init__(self, repo: str, token: str, session=None):
+    def __init__(self, repo: str, token: str, owner: str = "", session=None):
         import requests
-        self.repo, self.s = repo, session or requests.Session()
+        self.repo, self.owner, self.s = repo, owner, session or requests.Session()
         self.s.headers.update({"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json",
                                "X-GitHub-Api-Version": "2022-11-28"})
 
@@ -46,7 +48,14 @@ class GitHub:
             page += 1
 
     def create(self, title: str, body: str):
-        return self._req("POST", "/issues", json={"title": title, "body": body, "labels": [LABEL]})
+        data = {"title": title, "body": body, "labels": [LABEL]}
+        if self.owner:
+            data["assignees"] = [self.owner]
+        return self._req("POST", "/issues", json=data)
+
+    def assign(self, number: int):
+        if self.owner:
+            self._req("POST", f"/issues/{number}/assignees", json={"assignees": [self.owner]})
 
     def comment(self, number: int, body: str):
         return self._req("POST", f"/issues/{number}/comments", json={"body": body})
@@ -72,6 +81,7 @@ def apply(alerts: list[dict], gh: GitHub, run_url: str = "") -> list[str]:
         num = open_by_title.get(a["title"])
         if a["on"]:
             if num:
+                gh.assign(num)
                 gh.comment(num, body)
                 done.append(f"commented #{num}: {a['title']}")
             else:
@@ -99,7 +109,8 @@ def main(argv=None) -> int:
         return 1
     server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
     run_url = f"{server}/{repo}/actions/runs/{os.environ['GITHUB_RUN_ID']}" if os.environ.get("GITHUB_RUN_ID") else ""
-    for line in apply(alerts, GitHub(repo, token), run_url):
+    gh = GitHub(repo, token, os.environ.get("GITHUB_REPOSITORY_OWNER", ""))
+    for line in apply(alerts, gh, run_url):
         print(line)
     return 0
 

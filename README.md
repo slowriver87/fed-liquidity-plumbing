@@ -39,7 +39,7 @@ The workflow commits only when a data value changed and every check passed, usin
 
 ### Alerts
 
-GitHub emails new issues and comments to watchers, so set the repository's Watch to "All activity" or "Custom → Issues". Alert issues carry the label `alert` (`scripts/alerts.py`):
+Alert issues (`scripts/alerts.py`) and the "Data update needs attention" issue are assigned to the repository owner, read from `GITHUB_REPOSITORY_OWNER` at run time; being assigned subscribes the owner, so GitHub emails each new issue and comment. Alert issues carry the label `alert`:
 
 | Alert | When |
 |---|---|
