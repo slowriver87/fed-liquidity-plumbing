@@ -1,0 +1,116 @@
+{
+ "BEAAPI": {
+  "Request": {
+   "RequestParam": [
+    {
+     "ParameterName": "TABLENAME",
+     "ParameterValue": "T20804"
+    }
+   ]
+  },
+  "Results": {
+   "Statistic": "NIPA Table",
+   "UTCProductionTime": "2026-09-30T12:30:00.000",
+   "Dimensions": [],
+   "Data": [
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S001",
+     "LineNumber": "1",
+     "LineDescription": "Personal consumption expenditures (PCE)",
+     "TimePeriod": "2025M07",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "120.0",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S001",
+     "LineNumber": "1",
+     "LineDescription": "Personal consumption expenditures (PCE)",
+     "TimePeriod": "2025M08",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "120.3",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S001",
+     "LineNumber": "1",
+     "LineDescription": "Personal consumption expenditures (PCE)",
+     "TimePeriod": "2026M07",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "123.6",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S001",
+     "LineNumber": "1",
+     "LineDescription": "Personal consumption expenditures (PCE)",
+     "TimePeriod": "2026M8",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "123.909",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S025",
+     "LineNumber": "25",
+     "LineDescription": "PCE excluding food and energy",
+     "TimePeriod": "2025M07",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "120.0",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S025",
+     "LineNumber": "25",
+     "LineDescription": "PCE excluding food and energy",
+     "TimePeriod": "2025M08",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "120.3",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S025",
+     "LineNumber": "25",
+     "LineDescription": "PCE excluding food and energy",
+     "TimePeriod": "2026M07",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "123.6",
+     "NoteRef": "T20804"
+    },
+    {
+     "TableName": "T20804",
+     "SeriesCode": "S025",
+     "LineNumber": "25",
+     "LineDescription": "PCE excluding food and energy",
+     "TimePeriod": "2026M8",
+     "METRIC_NAME": "Current Dollars",
+     "CL_UNIT": "Level",
+     "UNIT_MULT": "0",
+     "DataValue": "123.909",
+     "NoteRef": "T20804"
+    }
+   ],
+   "Notes": []
+  }
+ }
+}

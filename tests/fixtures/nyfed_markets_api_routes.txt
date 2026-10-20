@@ -1,0 +1,126 @@
+Printed Oct 20, 2026 from https://markets.newyorkfed.org/static/docs/markets-api.yml (the spec behind the
+API index page). Route list, then the repo/reverse repo search route as documented.
+
+/api/ambs/{operation}/results/{include}/last/{number}.{format}
+/api/ambs/{operation}/results/{include}/lastTwoWeeks.{format}
+/api/ambs/{operation}/results/{include}/search.{format}
+/api/ambs/{operation}/{status}/{include}/latest.{format}
+/api/fxs/list/counterparties.{format}
+/api/fxs/{operationType}/last/{number}.{format}
+/api/fxs/{operationType}/latest.{format}
+/api/fxs/{operationType}/search.{format}
+/api/guidesheets/{guidesheetType}/latest.{format}
+/api/guidesheets/{guidesheetType}/previous.{format}
+/api/marketshare/qtrly/latest.{format}
+/api/marketshare/ytd/latest.{format}
+/api/pd/get/all/timeseries.csv
+/api/pd/get/asof/{date}.{format}
+/api/pd/get/{seriesbreak}/timeseries/{timeseries}.{format}
+/api/pd/get/{timeseries}.{format}
+/api/pd/latest/{seriesbreak}.{format}
+/api/pd/list/asof.{format}
+/api/pd/list/seriesbreaks.{format}
+/api/pd/list/timeseries.{format}
+/api/rates/all/latest.{format}
+/api/rates/all/search.{format}
+/api/rates/secured/all/latest.{format}
+/api/rates/secured/{ratetype}/last/{number}.{format}
+/api/rates/secured/{ratetype}/search.{format}
+/api/rates/unsecured/all/latest.{format}
+/api/rates/unsecured/{ratetype}/last/{number}.{format}
+/api/rates/unsecured/{ratetype}/search.{format}
+/api/rp/results/search.{format}
+/api/rp/reverserepo/propositions/search.{format}
+/api/rp/{operationType}/{method}/results/last/{number}.{format}
+/api/rp/{operationType}/{method}/results/lastTwoWeeks.{format}
+/api/rp/{operationType}/{method}/{status}/latest.{format}
+/api/seclending/{operation}/results/{include}/last/{number}.{format}
+/api/seclending/{operation}/results/{include}/lastTwoWeeks.{format}
+/api/seclending/{operation}/results/{include}/latest.{format}
+/api/seclending/{operation}/results/{include}/search.{format}
+/api/soma/agency/get/asof/{date}.{format}
+/api/soma/agency/get/cusip/{cusip}.{format}
+/api/soma/agency/get/release_log.{format}
+/api/soma/agency/get/{holdingtype}/asof/{date}.{format}
+/api/soma/asofdates/latest.{format}
+/api/soma/asofdates/list.{format}
+/api/soma/summary.{format}
+/api/soma/tsy/get/asof/{date}.{format}
+/api/soma/tsy/get/cusip/{cusip}.{format}
+/api/soma/tsy/get/monthly.{format}
+/api/soma/tsy/get/release_log.{format}
+/api/soma/tsy/get/{holdingtype}/asof/{date}.{format}
+/api/soma/tsy/wam/{holdingtype}/asof/{date}.{format}
+/api/tsy/{operation}/results/{include}/last/{number}.{format}
+/api/tsy/{operation}/results/{include}/lastTwoWeeks.{format}
+/api/tsy/{operation}/results/{include}/search.{format}
+/api/tsy/{operation}/{status}/{include}/latest.{format}
+
+ /api/rp/results/search.{format}:
+  get:
+   tags:
+    - Repo and Reverse Repo Operations
+   summary: Filter operations
+   description: Returns Repo and/or Reverse Repo operation Results.
+   produces:
+    - application/json
+    - text/xml
+    - text/csv
+    - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+   parameters:
+    - in: path
+      name: format
+      required: true
+      description: The format of the response.
+      schema:
+       type: string
+       enum: [json,xml,csv,xlsx]                        
+    - in: query
+      name: startDate
+      required: false
+      description: The start date (inclusive) from which to search. <br/> <i>Format yyyy-MM-dd</i> 
+      schema:
+       type: string
+       format: date
+    - in: query
+      name: endDate
+      required: false
+      description: The end date (inclusive) up until which to search. <br/> <i>Format yyyy-MM-dd</i>  
+      schema:
+       type: string
+       format: date           
+    - in: query
+      name: operationTypes
+      required: false
+      description: The operation types (comma-delimited) by which to filter.
+      schema:
+       type: string
+       enum: [Repo,Reverse Repo]      
+    - in: query
+      name: method
+      required: false
+      description: The operation method by which to filter.
+      schema:
+       type: string
+       enum: [multiple,single,fixed,allotment]
+    - in: query
+      name: securityType
+      required: false
+      description: The security type (tranche) by which to filter. For specific types, only operations which include that type will be returned.
+      schema:
+       type: string
+       enum: [mbs,agency,tsy,srf]       
+    - in: query
+      name: term
+      required: false
+      description: The term of the operation.
+      schema:
+       type: string
+       enum: [overnight,term]                  
+   responses:
+    '200':
+     $ref: '#/components/responses/repo-response'
+    '400':
+     $ref: '#/components/responses/bad-request-params'
+    '5XX':
+     $ref: '#/components/responses/unexpected-error'

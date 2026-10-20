@@ -1,0 +1,1647 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<message:MessageGroup xmlns:message="http://www.SDMX.org/resources/SDMXML/schemas/v1_0/message" xmlns:common="http://www.SDMX.org/resources/SDMXML/schemas/v1_0/common" xmlns:frb="http://www.federalreserve.gov/structure/compact/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.SDMX.org/resources/SDMXML/schemas/v1_0/message SDMXMessage.xsd http://www.federalreserve.gov/structure/compact/common frb_common.xsd">
+  <message:Header xmlns:message="http://www.SDMX.org/resources/SDMXML/schemas/v1_0/message">
+    <message:ID>H41</message:ID>
+    <message:Test>false</message:Test>
+    <message:Name>Factors Affecting Reserve Balances (H.4.1)</message:Name>
+    <message:Prepared>2026-10-15T12:45:16Z</message:Prepared>
+    <message:Sender id="FRB">
+      <message:Name>Federal Reserve Board</message:Name>
+    </message:Sender>
+    <message:Source>The Data Download Program (DDP) application is being retired. During the week of November 9, the “Build Your Package” feature in the Data Download Program (DDP) will be removed in preparation for the eventual retirement of the DDP. For complete release data, please refer to data release pages. For customized data retrieval, please use the tools available through Federal Reserve Economic Data (FRED).</message:Source>
+  </message:Header>
+  <frb:DataSet id="H41" xmlns:kf="http://www.federalreserve.gov/structure/compact/H41_H41" xsi:schemaLocation="http://www.federalreserve.gov/structure/compact/H41_H41 H41_H41.xsd">
+    <kf:Series SERIES_NAME="RESH4R_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="OFDRB" COMPONENT="RBFRB" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3045654" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3111454" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2936355" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2954465" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3077019" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3137377" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3100448" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3064896" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2944541" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3002731" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2947630" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2930817" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2916824" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2929285" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3036508" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2921536" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2969922" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2881686" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3022066" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3030854" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESH4R_XAW_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="OFDRB" COMPONENT="RBFRB" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3013902" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3080723" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3033444" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2951416" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2966897" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3098911" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3142721" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3062149" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2984570" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2993349" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2944059" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2935287" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2924936" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2894531" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2991310" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3013794" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2930193" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2948090" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3029659" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3022140" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESH4R_XAW_XCH1_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="OFDRB" COMPONENT="RBFRB" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-52658" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="66821" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-47279" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-82028" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="15481" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="132014" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="43810" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-80572" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-77579" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8779" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-49290" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-8772" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-10351" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-30405" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="96779" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="22484" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-83601" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="17897" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="81569" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-7519" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESH4R_XAW_XCH52_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="OFDRB" COMPONENT="RBFRB" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Other Factors Draining Reserve Balances: Reserve balances with Federal Reserve Banks: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-280479" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-326385" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-372922" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-417912" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-259083" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-231338" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-256101" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-300128" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-362844" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-339143" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-375991" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-382005" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-300031" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-287170" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-169464" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-59561" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-72025" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-18004" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="31188" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3112" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALD_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LN" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6120" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6658" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7642" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7946" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7832" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5822" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4813" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4950" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6565" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5319" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5691" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5101" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4962" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5355" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5907" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6950" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6311" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8804" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="10006" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11081" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALD_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LN" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6367" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6085" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6741" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7520" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7727" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6660" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5653" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4726" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5716" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6314" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5775" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5216" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5415" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5173" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5423" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6681" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6422" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6940" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7744" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11350" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALD_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LN" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="341" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-282" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="656" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="779" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="207" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1067" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1007" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-927" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="990" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="598" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-539" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-559" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="199" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-242" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="250" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1258" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-259" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="518" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="804" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3606" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALD_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LN" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1853" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1239" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="458" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="262" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-270" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1241" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1794" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1914" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1229" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-681" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-671" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-895" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-734" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-983" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-766" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="821" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-715" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1997" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5148" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALDP_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LNPC" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6072" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6606" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7572" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7894" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7778" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5771" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4755" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4885" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6506" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5257" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5644" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5038" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4890" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5282" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5838" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6879" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6235" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8738" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9965" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11044" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALDP_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LNPC" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6325" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6035" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6687" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7471" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7674" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6607" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5595" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4664" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5656" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6253" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5718" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5165" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5346" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5102" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5351" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6608" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6343" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6871" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7701" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11312" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALDP_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LNPC" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="337" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-290" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="652" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="784" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="203" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1067" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1012" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-931" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="992" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="597" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-535" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-553" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="181" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-244" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="249" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1257" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-265" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="528" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="830" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3611" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALDP_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="LCF" COMPONENT="LNPC" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Liquidity and Credit Facilities: Loans: Primary credit: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3669" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2968" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2173" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1952" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1280" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="184" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-374" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-512" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="165" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="713" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="732" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="522" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="663" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="412" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="574" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1956" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="436" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-532" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2079" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5230" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALG_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="SHOR" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6436426" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6447053" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6454464" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6452043" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6442980" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6453494" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6460625" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6462797" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6452856" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6463160" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6471490" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6475303" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6462101" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6468278" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6468269" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6470320" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6471088" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6464597" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6466820" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6471059" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALG_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="SHOR" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6436159" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6443015" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6448531" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6453621" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6442670" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6450444" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6459526" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6460939" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6460620" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6458111" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6466668" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6471814" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6471263" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6465275" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6468272" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6470065" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6472315" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6462747" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6465328" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6470368" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALG_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="SHOR" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1326" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6856" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5516" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5090" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-10951" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7774" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9082" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1413" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-319" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2509" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8557" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5146" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-551" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-5988" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2997" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1793" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2250" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9568" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2581" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5040" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALG_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="SHOR" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Securities held outright: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="64598" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="72222" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="77572" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="87897" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="90996" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="101137" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="110625" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="115065" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="128741" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="130710" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="138953" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="147188" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="155884" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="158045" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="162174" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="163888" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="167556" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="174535" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="180440" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="185272" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGASMO_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="MBSSHOR" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964786" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964786" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964798" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1961590" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948398" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948398" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948337" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1944788" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930855" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930855" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930855" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930728" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913585" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913585" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913585" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913523" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1910409" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1898089" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1898089" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1898160" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGASMO_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="MBSSHOR" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964786" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964786" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964835" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1963423" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948398" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948398" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1948389" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1946830" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1938817" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930855" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930855" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1930764" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1923242" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913585" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913585" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1913567" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1912188" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1899849" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1898089" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1898110" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGASMO_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="MBSSHOR" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9196" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="49" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1412" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-15025" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1559" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-8013" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-7962" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-91" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-7522" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9657" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-18" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1379" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-12339" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1760" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="21" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGASMO_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="MBSSHOR" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: Mortgage-backed securities: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-191375" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-191375" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-191370" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-187493" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190098" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190098" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190087" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190049" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-183871" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189817" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189808" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189224" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-187558" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189261" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189261" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189253" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-189066" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-186134" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-187894" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-187885" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGTR_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ZZZZ" COMPONENT="RP" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="102" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="255" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1200" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGTR_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ZZZZ" COMPONENT="RP" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="18" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="29" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="15" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="17" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="52" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="172" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGTR_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ZZZZ" COMPONENT="RP" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-187" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="13" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-3" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="28" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-29" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-4" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="13" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="16" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-8" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="43" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-50" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="170" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-171" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="0" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGTR_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ZZZZ" COMPONENT="RP" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Other: Repurchase agreements: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1583" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="26" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-6" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-28" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-49" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="17" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-8" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-163" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-685" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-633" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2392" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUO_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTS" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4469293" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4479919" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4487319" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4488106" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4492235" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4502749" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4509941" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4515661" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4519654" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4529958" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4538288" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4542228" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4546169" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4552347" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4552337" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4554450" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4558332" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4564161" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4566384" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4570552" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUO_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTS" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4469026" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4475882" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4481350" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4487851" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4491925" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4499699" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4508790" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4511763" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4519456" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4524909" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4533467" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4538703" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4545674" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4549343" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4552340" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4554150" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4557779" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4560550" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4564892" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4569911" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUO_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTS" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7870" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6856" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5468" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6501" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4074" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7774" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9091" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2973" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7693" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5453" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8558" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5236" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6971" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3669" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2997" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1810" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3629" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2771" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4342" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5019" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUO_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTS" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="255974" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="263597" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="268942" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="275390" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="281093" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="291234" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="300712" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="305115" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="312612" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="320527" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="328762" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="336412" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="343441" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="347306" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="351435" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="353140" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="356621" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="360668" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="368334" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="373157" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUOB_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTSB" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="469472" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="479336" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="485974" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="485974" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="489293" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="499249" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="505886" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="511066" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="514519" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="524877" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="533509" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="537752" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="541995" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="548360" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="548360" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="550482" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="554373" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="560211" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="562157" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="566048" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUOB_XAW_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTSB" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="469472" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="475578" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="480284" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="485974" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="489293" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="496404" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="504938" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="507366" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="514519" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="519698" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="528576" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="534115" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="541389" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="545329" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="548360" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="550179" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="553817" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="556597" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="560767" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="565492" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUOB_XAW_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTSB" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7046" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6106" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4706" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5690" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3319" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7111" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8534" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2428" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7153" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5179" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8878" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5539" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7274" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3940" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3031" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1819" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3638" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2780" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4170" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4725" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPALGUOB_XAW_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="ORH" COMPONENT="USTSB" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Securities Held Outright: U.S. Treasury securities: Bills: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="274054" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="280160" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="284866" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="290556" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="293875" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="300986" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="309445" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="311873" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="319026" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="324205" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="333083" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="338622" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="345896" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="349836" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="352867" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="354686" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="358324" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="361104" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="365274" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="369999" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLDT_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="DEPUSTG" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="845722" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="801084" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="956502" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="901845" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="807359" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="749244" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="795976" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="835417" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="970442" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="929325" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="959405" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="936406" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="959435" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="944364" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="843705" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="991708" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="947317" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="984046" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="885783" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="885823" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLDT_XAW_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="DEPUSTG" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="875713" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="828122" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="880713" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="918696" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="880237" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="774062" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="756218" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="829623" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="910776" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="907324" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="963950" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="953612" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="950736" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="967935" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="883335" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="877028" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="977084" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="948674" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="880253" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="883373" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLDT_XAW_XCH1_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="DEPUSTG" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="45417" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-47591" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="52591" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="37983" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-38459" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-106175" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-17844" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="73405" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="81153" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-3452" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="56626" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-10338" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2876" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="17199" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-84600" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-6307" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="100056" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-28410" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-68421" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3120" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLDT_XAW_XCH52_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="DEPUSTG" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Deposits with F.R. Banks, other than reserve balances: U.S. Treasury, General Account: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="496766" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="495215" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="542951" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="554321" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="520721" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="454173" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="459971" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="506447" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="540269" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="486281" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="459646" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="434078" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="360738" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="370422" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="211061" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="120652" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="172228" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="143535" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="72825" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="73780" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLR_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRP" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="325788" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="317298" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="335625" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="336528" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="338438" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="348475" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="354079" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="352703" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="337051" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="319368" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="358117" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="373686" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="356158" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="357742" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="349663" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="323803" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="320725" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="361883" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="333739" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="326799" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLR_XAW_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRP" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="324936" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="313913" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="316978" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="333643" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="344778" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="348804" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="348302" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="353244" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="343947" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="342725" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="350888" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="364865" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="362213" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="365043" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="351659" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="338042" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="316143" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="329260" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="329526" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="332191" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLR_XAW_XCH1_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRP" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="23537" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-11023" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3065" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="16665" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11135" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4026" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-502" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4942" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9297" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1222" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8163" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="13977" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2652" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2830" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-13384" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-13617" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-21899" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="13117" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="266" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2665" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLR_XAW_XCH52_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRP" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-280624" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-227771" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-226218" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-203749" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-334310" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-258968" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-218581" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-218623" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-181761" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-140978" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-70616" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-24897" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-25987" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-50021" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-18985" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-33213" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-67503" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-85359" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-46546" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-21783" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRD_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPO" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2062" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="387" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6828" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4534" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1001" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3347" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="151" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="376" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2576" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1650" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="725" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="317" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="702" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="525" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="432" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5375" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="461" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11539" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2338" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="201" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRD_XAW_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPO" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6009" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="886" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2850" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2278" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8063" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2750" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1233" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="158" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1144" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1937" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1247" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="275" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="330" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1280" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="637" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3999" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="500" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3742" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1230" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="287" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRD_XAW_XCH1_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPO" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4469" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-5123" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1964" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-572" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5785" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-5313" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1517" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-1075" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="986" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="793" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-690" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-972" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="55" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="950" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-643" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3362" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-3499" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3242" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2512" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-943" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRD_XAW_XCH52_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPO" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Others: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-218353" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-165863" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-168879" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-166788" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-285255" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-214875" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-190403" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-198589" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-153238" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-113602" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-72436" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-31964" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-34680" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-53370" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-21484" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14376" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14578" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-36981" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-15376" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-3998" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRF_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPF" DISTRIBUTION="TOT" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="323726" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="316911" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="328797" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="331994" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="337437" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="345128" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="353928" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="352327" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="334475" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="317718" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="357392" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="373369" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="355456" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="357217" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="349231" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="318428" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="320264" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="350344" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="331401" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="326598" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRF_XAW_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPF" DISTRIBUTION="TOT" SERIESTYPE="A" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="318928" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="313028" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="314127" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="331364" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="336715" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="346054" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="347069" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="353086" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="342803" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="340789" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="349641" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="364589" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="361883" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="363763" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="351022" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="334042" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="315643" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="325518" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="328297" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="331904" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRF_XAW_XCH1_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPF" DISTRIBUTION="TOT" SERIESTYPE="ACW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: change in week average from previous week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="19069" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-5900" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1099" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="17237" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5351" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9339" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1015" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6017" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-10283" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2014" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8852" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="14948" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-2706" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1880" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-12741" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-16980" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-18399" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="9875" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2779" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3607" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPLLRF_XAW_XCH52_N.WW" FREQ="19" CATEGORY="LIABCAP" SUBCATEGORY="LIAB" COMPONENT="RRPF" DISTRIBUTION="TOT" SERIESTYPE="ACY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Liabilities and Capital: Liabilities: Reverse repurchase agreements: Foreign official and international accounts: change in week average from year ago week average</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-62271" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-61907" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-57340" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-36961" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-49055" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-44093" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-28178" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-20034" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-28523" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-27375" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1820" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7066" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8693" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3349" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="2499" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-18838" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-52926" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-48379" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-31169" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-17785" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPMA_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="TA" COMPONENT="TA" DISTRIBUTION="TOTC" SERIESTYPE="L" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6711495" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6725397" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6736424" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6735645" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6724564" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6735609" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6743028" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6747378" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6738190" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6748567" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6759955" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6745699" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6730912" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6737204" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6740619" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6746548" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6747704" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6743031" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6747560" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6755639" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPMA_XCH1_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="TA" COMPONENT="TA" DISTRIBUTION="TOTC" SERIESTYPE="LCW" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): change in Wednesday level from previous Wednesday level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): change in Wednesday level from previous Wednesday level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7112" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="13902" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11027" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-779" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-11081" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11045" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="7419" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4350" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-9188" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="10377" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="11388" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14256" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-14787" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="6292" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="3415" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="5929" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="1156" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="-4673" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="4529" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="8079" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+    <kf:Series SERIES_NAME="RESPPMA_XCH52_N.WW" FREQ="19" CATEGORY="ASSET" SUBCATEGORY="TA" COMPONENT="TA" DISTRIBUTION="TOTC" SERIESTYPE="LCY" UNIT="Currency" UNIT_MULT="1000000" CURRENCY="USD">
+      <frb:Annotations>
+        <common:Annotation>
+          <common:AnnotationType>Short Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): change in Wednesday level from year ago level</common:AnnotationText>
+        </common:Annotation>
+        <common:Annotation>
+          <common:AnnotationType>Long Description</common:AnnotationType>
+          <common:AnnotationText>Assets: Total Assets: Total assets (Less eliminations from consolidation): change in Wednesday level from year ago level</common:AnnotationText>
+        </common:Annotation>
+      </frb:Annotations>
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="38610" TIME_PERIOD="2026-06-03" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="48242" TIME_PERIOD="2026-06-10" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="55368" TIME_PERIOD="2026-06-17" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="73445" TIME_PERIOD="2026-06-24" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="64966" TIME_PERIOD="2026-07-01" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="73697" TIME_PERIOD="2026-07-08" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="83755" TIME_PERIOD="2026-07-15" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="89663" TIME_PERIOD="2026-07-22" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="95612" TIME_PERIOD="2026-07-29" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="107724" TIME_PERIOD="2026-08-05" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="116340" TIME_PERIOD="2026-08-12" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="127284" TIME_PERIOD="2026-08-19" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="127528" TIME_PERIOD="2026-08-26" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="135133" TIME_PERIOD="2026-09-02" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="134657" TIME_PERIOD="2026-09-09" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="137951" TIME_PERIOD="2026-09-16" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="139309" TIME_PERIOD="2026-09-23" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="155912" TIME_PERIOD="2026-09-30" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="156745" TIME_PERIOD="2026-10-07" />
+      <frb:Obs OBS_STATUS="A" OBS_VALUE="159185" TIME_PERIOD="2026-10-14" />
+    </kf:Series>
+  </frb:DataSet>
+</message:MessageGroup>
