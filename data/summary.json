@@ -1,18 +1,18 @@
 {
   "updated": "2026-10-22",
-  "h41_week": "2026-10-14",
+  "h41_week": "2026-10-21",
   "rates_date": "2026-10-21",
-  "reserves_T": 3.022,
-  "tga_B": 883.4,
-  "netliq_T": 5.872,
-  "netliq_13w_B": -115,
+  "reserves_T": 2.963,
+  "tga_B": 952.0,
+  "netliq_T": 5.801,
+  "netliq_13w_B": -116,
   "sofr": 3.88,
   "effr": 3.88,
   "iorb": 3.9,
   "sofr_iorb_bp": -2,
   "effr_iorb_bp": -2,
-  "srf_B": 0.0,
-  "onrrp_B": 0.2,
+  "srf_B": 0.001,
+  "onrrp_B": 0.4,
   "range": [
     3.75,
     4.0
@@ -27,13 +27,13 @@
   "tiles": [
     {
       "name": "Bank reserves",
-      "status": "good",
-      "label": "Ample"
+      "status": "warn",
+      "label": "Tightening"
     },
     {
       "name": "Treasury General Account",
-      "status": "good",
-      "label": "Ample"
+      "status": "warn",
+      "label": "Tightening"
     },
     {
       "name": "Overnight reverse repo",
@@ -67,8 +67,8 @@
     },
     {
       "name": "Fed loans to banks",
-      "status": "warn",
-      "label": "Tightening"
+      "status": "good",
+      "label": "Ample"
     },
     {
       "name": "Real fed funds rate",
