@@ -82,7 +82,7 @@ def daily(ops: list[dict]) -> dict[str, dict]:
         d = out.setdefault(o["operationDate"], {"srf": 0, "rrp": None, "srf_rate": None, "rrp_rate": None,
                                                 "n": 0, "other": [], "_srf_dollars": 0, "_rrp_dollars": None})
         if o.get("term") != "Overnight" or o.get("auctionStatus", "Results") != "Results":
-            d["other"].append(f"{o.get('operationId')} {o['operationType']} {o.get('term')} {o.get('auctionStatus')}")
+            d["other"].append(_describe(o))
             continue
         amt = o["totalAmtAccepted"]
         if not _isnum(amt):
@@ -100,11 +100,38 @@ def daily(ops: list[dict]) -> dict[str, dict]:
             d["_srf_dollars"] += amt
         else:
             d["_rrp_dollars"] = (d["_rrp_dollars"] or 0) + amt
-    for d in out.values():
+    for day, d in out.items():
         d["srf"] = to_millions(d.pop("_srf_dollars")) if d["srf_rate"] is not None else None
         r = d.pop("_rrp_dollars")
         d["rrp"] = to_millions(r) if r is not None else None
+        d["repo_out"], d["repo_terms"] = repo_outstanding(ops, day)
     return out
+
+
+def _describe(o: dict) -> str:
+    amt = o.get("totalAmtAccepted")
+    amt = f"${to_millions(amt):,}M" if _isnum(amt) else "amount n/a"
+    return (f"{o.get('operationId')} {o['operationType']} {o.get('term')} ({o.get('termCalenderDays')} days) "
+            f"{o.get('auctionStatus')}, {amt}, settles {o.get('settlementDate')}, matures {o.get('maturityDate')}")
+
+
+def repo_outstanding(ops: list[dict], day: str) -> tuple:
+    """Repo operations outstanding at the end of `day` (settlementDate <= day < maturityDate, any term),
+    in $ millions, and descriptions of the non-overnight ones among them. This is what the H.4.1
+    'Repurchase agreements' Wednesday level holds: a term operation agreed on Tuesday that settles
+    Wednesday and matures Friday counts on Wednesday."""
+    total, terms = 0, []
+    for o in ops:
+        if o["operationType"] != "Repo" or o.get("auctionStatus", "Results") != "Results":
+            continue
+        s, m = o.get("settlementDate"), o.get("maturityDate")
+        if not s or not m:
+            raise SourceError(f"repo operations: {o.get('operationId')} has no settlement or maturity date")
+        if s <= day < m:
+            total += o["totalAmtAccepted"]
+            if o.get("term") != "Overnight":
+                terms.append(_describe(o))
+    return to_millions(total), terms
 
 
 def get_ops(start: str, end: str) -> dict[str, dict]:

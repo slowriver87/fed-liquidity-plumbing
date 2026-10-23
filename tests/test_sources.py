@@ -144,7 +144,7 @@ def test_ops_units_and_other_terms():
     ops = json.loads(text("nyfed_rp_last12.json"))["repo"]["operations"]
     ops[0] = {**ops[0], "term": "Term", "operationId": "RP X"}
     d = nyfed.daily(ops)
-    assert d[ops[0]["operationDate"]]["other"] == ["RP X Repo Term Results"]
+    assert d[ops[0]["operationDate"]]["other"] == ["RP X Repo Term (1 days) Results, $0M, settles 2026-10-19, matures 2026-10-20"]
 
 
 # ---------------------------------------------------------------------------
@@ -239,3 +239,27 @@ def test_calendar_holiday_and_quarter_end():
     assert [x["d"] for x in c if x["id"] == "me"] == ["2026-11-30"]
     c = calendar.build(dt.date(2026, 12, 10), None, None, None, None, [])
     assert [(x["d"], x["id"]) for x in c if x["id"] in ("me", "qe")] == [("2026-12-31", "qe")]
+
+
+def test_repo_outstanding_counts_term_operations():
+    """Oct 20, 2026: RP 102026 29, a $67M two-day term repo (Small Value Exercise) agreed Oct 20, settling
+    Oct 21 and maturing Oct 23, was outstanding at the end of Wednesday Oct 21."""
+    ops = nyfed.parse_ops(text("nyfed_rp_search_20261001_20261023.json"))
+    out, terms = nyfed.repo_outstanding(ops, "2026-10-21")
+    assert out == 67 and len(terms) == 1 and terms[0].startswith("RP 102026 29 Repo Term (2 days) Results, $67M")
+    assert nyfed.repo_outstanding(ops, "2026-10-20") == (0, [])         # settles the next day
+    assert nyfed.repo_outstanding(ops, "2026-10-22")[0] == 68           # 1 overnight + the term repo
+    assert nyfed.repo_outstanding(ops, "2026-10-23")[0] == 0            # matured
+    d = nyfed.daily(ops)
+    assert (d["2026-10-20"]["srf"], d["2026-10-21"]["srf"]) == (0, 0)  # the usage tile stays overnight-only
+    assert d["2026-10-21"]["repo_out"] == 67
+    assert d["2026-10-20"]["other"] == [terms[0]]
+    h = h41.parse_html(raw("h41_20261022.html"))
+    assert (h["wed"], h["t1"]["repo"]) == ("2026-10-21", [27, 26, -1881, 67])
+
+
+def test_repo_outstanding_equals_overnight_on_the_seed_wednesdays():
+    reads = dated_reads()
+    d = nyfed.daily(nyfed.parse_ops(text("nyfed_rp_wednesdays_20260624_20261014.json")))
+    for w, r in reads.items():
+        assert d[w]["repo_out"] == r["t1"]["repo"][3] or abs(d[w]["repo_out"] - r["t1"]["repo"][3]) <= 1, w
