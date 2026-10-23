@@ -618,3 +618,102 @@ def test_placeholder_never_replaces_a_held_value(offline, tmp_path):
     r = update.Run(today=TODAY, now=NOW, old=unseeded(seed()), keys={})
     update.do_ops(r)
     assert r.new["OPS"]["rrp"][-1] == 330 and r.pending == []
+
+
+# ---------------------------------------------------------------------------
+# Week of Oct 21, 2026: a term repo outstanding on the Wednesday (issue #6)
+
+OCT23, OCT23_NOW = __import__("datetime").date(2026, 10, 23), __import__("datetime").datetime(2026, 10, 23, 10, 45)
+
+
+def oct21_sources(offline):
+    from conftest import raw, text
+    from sources import h41, nyfed
+    offline["h41_current"] = lambda: h41.parse_html(raw("h41_20261022.html"))
+    ops = nyfed.parse_ops(text("nyfed_rp_search_20261001_20261023.json"))
+    offline["ops"] = lambda a, b: {d: v for d, v in nyfed.daily(ops).items() if a <= d <= b}
+
+
+def run_oct23(tmp_path, page):
+    return update.run_update(page, tmp_path / "data" / "summary.json", False, commit_msg=tmp_path / "msg.txt",
+                             issue_body=tmp_path / "issue.md", alerts_path=tmp_path / "alerts.json", today=OCT23,
+                             now=OCT23_NOW, keys={"BEA_API_KEY": "x"})
+
+
+def test_new_week_with_term_repo_outstanding(offline, tmp_path, capsys):
+    oct21_sources(offline)
+    page = write_page(tmp_path, unseeded(seed()))     # DATA.h41 = week of Oct 14
+    assert run_oct23(tmp_path, page) == 0
+    out = capsys.readouterr().out
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert b["DATA"]["h41"]["wed"] == "2026-10-21"
+    assert b["DATA"]["h41"]["t1"]["repo"] == [27, 26, -1881, 67]
+    assert "RP 102026 29" in out.split("### Notes")[1]              # listed in the run summary
+    assert "WEEKS.tga: 883373 → 952002 (+7.8%)" in out                # still listed as a move ...
+    assert not (tmp_path / "issue.md").exists()                        # ... but under the 15% TGA threshold
+    assert b["OPS"]["srf"][b["OPS"]["dates"].index("2026-10-20")] == 0
+
+
+def test_null_repo_row_is_filled_on_the_next_run(offline, tmp_path, capsys):
+    """The page as the Oct 22 run left it: week of Oct 21 with repurchase agreements null."""
+    from conftest import raw
+    from sources import h41
+    oct21_sources(offline)
+    b0 = unseeded(seed())
+    r = h41.parse_html(raw("h41_20261022.html"))
+    r["t1"]["repo"] = [None] * 4
+    b0["DATA"]["h41"] = {"release": r["release"], "wed": r["wed"], "t1": r["t1"], "assets": r["assets"]}
+    W = b0["WEEKS"]
+    b0["WEEKS"] = {"dates": W["dates"][1:] + ["2026-10-21"], "res": W["res"][1:] + [2962607],
+                   "tga": W["tga"][1:] + [952002], "assets": W["assets"][1:] + [6753604], "rrp": W["rrp"][1:] + [237]}
+    page = write_page(tmp_path, b0)
+    assert run_oct23(tmp_path, page) == 0
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert b["DATA"]["h41"]["t1"]["repo"] == [27, 26, -1881, 67]
+    assert {k: v for k, v in b["DATA"]["h41"]["t1"].items() if k != "repo"} == \
+           {k: v for k, v in b0["DATA"]["h41"]["t1"].items() if k != "repo"}
+    assert b["WEEKS"] == b0["WEEKS"]
+    row = {x[0]: x for x in b["LOG"]}["Bank reserves"]
+    assert row[5].startswith("Re-read Oct 21: repo filled, the checks pass now.")
+    assert "| `DATA.h41.t1.repo.wed` | null → 67 | 2026-10-21 |" in capsys.readouterr().out
+    assert not (tmp_path / "issue.md").exists()
+
+
+def test_null_row_that_still_fails_stays_null(offline, tmp_path):
+    from conftest import raw
+    from sources import h41, nyfed
+    oct21_sources(offline)
+    from conftest import text
+    ops = nyfed.parse_ops(text("nyfed_rp_search_20261001_20261023.json"))
+    ops = [o for o in ops if o["operationId"] != "RP 102026 29"]    # the old, overnight-only reading
+    offline["ops"] = lambda a, b: {d: v for d, v in nyfed.daily(ops).items() if a <= d <= b}
+    b0 = unseeded(seed())
+    r = h41.parse_html(raw("h41_20261022.html"))
+    r["t1"]["repo"] = [None] * 4
+    b0["DATA"]["h41"] = {"release": r["release"], "wed": r["wed"], "t1": r["t1"], "assets": r["assets"]}
+    W = b0["WEEKS"]
+    b0["WEEKS"] = {"dates": W["dates"][1:] + ["2026-10-21"], "res": W["res"][1:] + [2962607],
+                   "tga": W["tga"][1:] + [952002], "assets": W["assets"][1:] + [6753604], "rrp": W["rrp"][1:] + [237]}
+    page = write_page(tmp_path, b0)
+    assert run_oct23(tmp_path, page) == 0
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    assert b["DATA"]["h41"]["t1"]["repo"] == [None] * 4
+
+
+def test_tga_weekly_issue_threshold_is_15_percent():
+    a = seed()
+
+    def week(tga=None, res=None):
+        b = copy.deepcopy(a)
+        b["WEEKS"]["dates"] = b["WEEKS"]["dates"][1:] + ["2026-10-21"]
+        last = {k: b["WEEKS"][k][-1] for k in ("res", "tga", "assets", "rrp")}
+        last.update({k: v for k, v in (("tga", tga), ("res", res)) if v is not None})
+        for k in ("res", "tga", "assets", "rrp"):
+            b["WEEKS"][k] = b["WEEKS"][k][1:] + [last[k]]
+        return b
+    allm, levels = update.moves(a, week(tga=952002))                # +7.8%
+    assert any(m.startswith("WEEKS.tga") for m in allm) and not any(m.startswith("WEEKS.tga") for m in levels)
+    _, levels = update.moves(a, week(tga=1020000))                  # +15.5%
+    assert any(m.startswith("WEEKS.tga") and "issue threshold 15%" in m for m in levels)
+    _, levels = update.moves(a, week(res=2850000))                  # reserves -5.7%
+    assert any(m.startswith("WEEKS.res") and "issue threshold 5%" in m for m in levels)

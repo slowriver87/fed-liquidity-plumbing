@@ -43,7 +43,9 @@ N_WEEKS, N_DAYS = 17, 10
 PCT_MOVE = 5.0          # percent, for amounts
 RATE_MOVE = 0.10        # percentage points, for rates
 SMALL_AMOUNT = 5000     # $M: amounts below $5B are exempt from the 5% rule
-LEVEL_MOVE_FIELDS = {"WEEKS.res", "WEEKS.tga", "WEEKS.assets", "WEEKS.netliq"}
+# Level series whose weekly move opens an issue, with the threshold (%). The Treasury account swings 5-10%
+# in a week around tax dates, so its threshold is higher.
+LEVEL_MOVE_FIELDS = {"WEEKS.res": 5.0, "WEEKS.tga": 15.0, "WEEKS.assets": 5.0, "WEEKS.netliq": 5.0}
 RESERVES_ALERT = 100_000
 SRF_ALERT = 25_000
 LOOKBACK_DAYS = 35
@@ -431,7 +433,11 @@ def do_h41(run: Run):
         return run.not_reached("h41", f"newest week {cur['wed']} is older than the page's {old['wed']}")
     seeded = run.seeded("h41")
     is_new = cur["wed"] > old["wed"]
-    if not is_new and not seeded:
+    # Rows nulled by a failed check on an earlier run: re-read and re-check them while the week is current
+    refill = [] if is_new else [k for k in h41.T1_ROWS if all(x is None for x in old["t1"][k])] + \
+        (["assets"] if all(x is None for x in old["assets"]) else [])
+    run.cache["h41_refill"] = refill
+    if not is_new and not seeded and not refill:
         run.fresh["h41"] = cur["wed"]
         if _h41_values(cur) != _h41_values(old) or cur["release"] != old["release"]:
             run.keep("h41", cur["wed"], "the current release differs from the page for the same week")
@@ -559,9 +565,14 @@ def finish_h41(run: Run):
         if abs(vals["t1"]["rrpOthers"][3] - o["rrp"]) > 1:
             bad_rows.append("rrpOthers")
             why["rrpOthers"] = f"reverse repo Others failed the NY Fed operations tie ({vals['t1']['rrpOthers'][3]} vs {o['rrp']})"
-        if o["srf"] is not None and abs(vals["t1"]["repo"][3] - o["srf"]) > 1:
+        # H.4.1 repurchase agreements = every Repo operation outstanding at the end of the Wednesday
+        # (settled on or before it, maturing after it; any term), not only that day's overnight operations
+        out = o.get("repo_out", o["srf"])
+        if out is not None and abs(vals["t1"]["repo"][3] - out) > 1:
             bad_rows.append("repo")
-            why["repo"] = f"repurchase agreements failed the NY Fed operations tie ({vals['t1']['repo'][3]} vs {o['srf']})"
+            why["repo"] = f"repurchase agreements failed the NY Fed operations tie ({vals['t1']['repo'][3]} vs {out} outstanding)"
+        elif out is not None and o.get("repo_terms"):
+            run.notes.append(f"Repo outstanding on {wed} includes non-overnight operations: {'; '.join(o['repo_terms'])}.")
         if "rrpOthers" not in why and "repo" not in why:
             how += " Wednesday reverse repo and repo tie to NY Fed operations."
     else:
@@ -588,6 +599,31 @@ def finish_h41(run: Run):
         if bad_rows:
             text = f"Null: H.4.1 showed {day_label(wed)} but " + "; ".join(why[k] for k in bad_rows) + "; issue opened."
         run.result("h41", text)
+    elif run.cache.get("h41_refill") and not run.seeded("h41"):
+        # A held week with rows nulled by an earlier failed check: fill the rows whose checks pass now
+        old = run.old["DATA"]["h41"]
+        refill = run.cache["h41_refill"]
+        filled = [k for k in refill if k not in bad_rows]
+        t1 = copy.deepcopy(old["t1"])
+        assets = list(old["assets"])
+        W, i = run.new["WEEKS"], (run.new["WEEKS"]["dates"].index(wed) if wed in run.new["WEEKS"]["dates"] else None)
+        for k in filled:
+            if k == "assets":
+                assets = vals["assets"]
+            else:
+                t1[k] = vals["t1"][k]
+            col = {"reserves": ("res", 0), "tga": ("tga", 0), "rrpOthers": ("rrp", 3)}.get(k)
+            if i is not None and col:
+                W[col[0]][i] = vals["t1"][k][col[1]]
+            if i is not None and k == "assets":
+                W["assets"][i] = vals["assets"][0]
+        D["h41"] = {"release": old["release"], "wed": wed, "t1": t1, "assets": assets}
+        still = [k for k in refill if k in bad_rows]
+        if still:
+            run.notes.append(f"H.4.1 {wed}: still null after the re-read: " + "; ".join(why[k] for k in still))
+        text = (f"Re-read {day_label(wed)}: {', '.join(filled)} filled, the checks pass now. {how}" if filled else
+                f"Re-read {day_label(wed)}: {', '.join(still)} still fail the checks; kept null.")
+        run.result("h41", text.strip())
     else:
         # The seeded week re-read: a failed check keeps the page value
         if bad_rows:
@@ -749,7 +785,8 @@ def do_ops(run: Run):
     run.cache["ops_all"] = {d: days[d] for d in usable}
     other = [o for d in usable for o in days[d]["other"]]
     if other:
-        run.notes.append("Operations not counted (not overnight results): " + "; ".join(other))
+        run.notes.append("Non-overnight operations (left out of standing repo usage; in the H.4.1 repo tie while "
+                         "outstanding): " + "; ".join(other))
     O0 = run.old["OPS"]
     dates = usable[-N_DAYS:]
     if dates[-1] < O0["dates"][-1]:
@@ -1104,8 +1141,8 @@ def moves(old: dict, new: dict) -> tuple[list[str], list[str]]:
         elif a and abs(b / a - 1) * 100 > PCT_MOVE:
             line = f"{f}: {a} → {b} ({(b / a - 1) * 100:+.1f}%)"
             out.append(line)
-            if f in LEVEL_MOVE_FIELDS:
-                levels.append(line)
+            if f in LEVEL_MOVE_FIELDS and abs(b / a - 1) * 100 > LEVEL_MOVE_FIELDS[f]:
+                levels.append(f"{line}; issue threshold {LEVEL_MOVE_FIELDS[f]:.0f}%")
     return out, levels
 
 
@@ -1280,7 +1317,7 @@ def run_update(page: Path, summary_path: Path, dry_run: bool, commit_msg: Path |
         return 1
 
     if level_moves:
-        run.attention += [f"Level series moved more than {PCT_MOVE:.0f}% in a week: {m}" for m in level_moves]
+        run.attention += [f"Level series moved more than its weekly threshold: {m}" for m in level_moves]
     old_summary = None
     if summary_path.exists():
         try:
