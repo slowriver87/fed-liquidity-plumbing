@@ -8,10 +8,10 @@ A one-page dashboard of the Federal Reserve's balance sheet and the overnight mo
 
 | Data | Primary | Second read / ties |
 |---|---|---|
-| Reserves, TGA, reverse repo, loans, securities (weekly) | Fed H.4.1 release page, Tables 1 and 5 | The release's own XML file (`FRB_h41_xml.zip`) must equal the page for every row; week-average change = this week − last week; reverse repo = foreign + others; TGA Wednesday = DTS close; reverse repo Others and repo Wednesday = NY Fed operations |
+| Reserves, TGA, reverse repo, loans, securities (weekly) | Fed H.4.1 release page, Tables 1 and 5 | The release's own XML file (`FRB_h41_xml.zip`) must equal the page for every row; week-average change = this week − last week; reverse repo = foreign + others; TGA Wednesday = DTS close; reverse repo Others and repo Wednesday = NY Fed operations (repo: every Repo operation outstanding at the end of the Wednesday, settlement ≤ Wednesday < maturity, any term) |
 | Treasury account, daily | Treasury Fiscal Data, Daily Treasury Statement | — |
 | SOFR, EFFR, target range | New York Fed Markets API (date-range search) | Target range checked against the FOMC implementation note when it changes |
-| Standing repo and reverse repo usage and rates | New York Fed operation results (date-range search) | Wednesday amounts tie to H.4.1 |
+| Standing repo and reverse repo usage and rates | New York Fed operation results (date-range search); usage counts overnight operations only, and any non-overnight operation is listed in the run summary | Wednesday amounts tie to H.4.1 |
 | IORB | Fed policy rates file (`FRB_PRATES_xml.zip`) | FOMC implementation note when a rate changes; `lo < IORB ≤ hi`, `rrp ≤ lo`, `srf ≥ hi` |
 | Bill purchases | New York Fed Treasury purchase schedule (strict sentence patterns) | — |
 | Core PCE | BEA API, table T20804 | — |
@@ -28,7 +28,7 @@ Every number on the page comes from nine one-line JavaScript objects between the
 1. Two reads: H.4.1 HTML and XML agree on every value used for the newest week. If the XML cannot be read, the H.4.1 rows are logged as single source.
 2. Ties (listed in the table above).
 3. Seed check (first run per source, while its log row says "Seeded"): values re-read for a date the page already holds must equal the page — all 17 `WEEKS` rows from their dated releases, the `DATA.h41` week, `RATES` and `OPS` for every seeded date, `POLICY`, the DTS close and core PCE. Any difference stops the run and lists it.
-4. Moves over 5% (10bp for rates; amounts under $5B exempt) go into the run summary and the commit message; reserves, TGA, assets or net liquidity moving more than 5% in a week also opens an issue.
+4. Moves over 5% (10bp for rates; amounts under $5B exempt) go into the run summary and the commit message; reserves, assets or net liquidity moving more than 5% in a week, or the TGA more than 15% (it swings 5–10% a week around tax dates), also opens an issue.
 5. Only the seven data lines changed; `NOTES` and `AUDIT` are byte-identical.
 6. Array lengths (17 weeks, 10 business days) and date order; no weekends or holidays.
 7. The page script parses (`node --check`) and Node reads the blocks back unchanged.

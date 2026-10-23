@@ -44,6 +44,7 @@ PCT_MOVE = 5.0          # percent, for amounts
 RATE_MOVE = 0.10        # percentage points, for rates
 SMALL_AMOUNT = 5000     # $M: amounts below $5B are exempt from the 5% rule
 LEVEL_MOVE_FIELDS = {"WEEKS.res", "WEEKS.tga", "WEEKS.assets", "WEEKS.netliq"}
+LEVEL_MOVE_PCT = {"WEEKS.tga": 15.0}  # percent: the Treasury account swings 5-10% a week around tax dates
 RESERVES_ALERT = 100_000
 SRF_ALERT = 25_000
 LOOKBACK_DAYS = 35
@@ -559,9 +560,9 @@ def finish_h41(run: Run):
         if abs(vals["t1"]["rrpOthers"][3] - o["rrp"]) > 1:
             bad_rows.append("rrpOthers")
             why["rrpOthers"] = f"reverse repo Others failed the NY Fed operations tie ({vals['t1']['rrpOthers'][3]} vs {o['rrp']})"
-        if o["srf"] is not None and abs(vals["t1"]["repo"][3] - o["srf"]) > 1:
+        if o["repo_out"] is not None and abs(vals["t1"]["repo"][3] - o["repo_out"]) > 1:
             bad_rows.append("repo")
-            why["repo"] = f"repurchase agreements failed the NY Fed operations tie ({vals['t1']['repo'][3]} vs {o['srf']})"
+            why["repo"] = f"repurchase agreements failed the NY Fed operations tie ({vals['t1']['repo'][3]} vs {o['repo_out']})"
         if "rrpOthers" not in why and "repo" not in why:
             how += " Wednesday reverse repo and repo tie to NY Fed operations."
     else:
@@ -747,9 +748,13 @@ def do_ops(run: Run):
     done = lambda d: d < run.today.isoformat() or (run.now.hour, run.now.minute) >= OPS_DAY_DONE
     usable = sorted(d for d in days if done(d) and is_business_day(parse_iso(d)))
     run.cache["ops_all"] = {d: days[d] for d in usable}
+    term = [o for d in usable for o in days[d]["term"]]
+    if term:
+        run.notes.append("Non-overnight operations (in the H.4.1 Wednesday repo tie while outstanding, "
+                         "not in standing repo usage): " + "; ".join(term))
     other = [o for d in usable for o in days[d]["other"]]
     if other:
-        run.notes.append("Operations not counted (not overnight results): " + "; ".join(other))
+        run.notes.append("Operations not counted (not results): " + "; ".join(other))
     O0 = run.old["OPS"]
     dates = usable[-N_DAYS:]
     if dates[-1] < O0["dates"][-1]:
@@ -1104,8 +1109,9 @@ def moves(old: dict, new: dict) -> tuple[list[str], list[str]]:
         elif a and abs(b / a - 1) * 100 > PCT_MOVE:
             line = f"{f}: {a} → {b} ({(b / a - 1) * 100:+.1f}%)"
             out.append(line)
-            if f in LEVEL_MOVE_FIELDS:
-                levels.append(line)
+            lim = LEVEL_MOVE_PCT.get(f, PCT_MOVE)
+            if f in LEVEL_MOVE_FIELDS and abs(b / a - 1) * 100 > lim:
+                levels.append(f"Level series moved more than {lim:.0f}% in a week: {line}")
     return out, levels
 
 
@@ -1280,7 +1286,7 @@ def run_update(page: Path, summary_path: Path, dry_run: bool, commit_msg: Path |
         return 1
 
     if level_moves:
-        run.attention += [f"Level series moved more than {PCT_MOVE:.0f}% in a week: {m}" for m in level_moves]
+        run.attention += level_moves
     old_summary = None
     if summary_path.exists():
         try:

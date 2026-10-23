@@ -295,7 +295,7 @@ def test_moves():
         b["WEEKS"][k] = b["WEEKS"][k][1:] + [v]
     b["RATES"]["sofr"][-1] = 4.05
     allm, levels = update.moves(a, b)
-    assert any(m.startswith("WEEKS.res:") for m in levels)          # -10.7% in a week
+    assert any("WEEKS.res:" in m and "more than 5%" in m for m in levels)   # -10.7% in a week
     assert not any(m.startswith("WEEKS.rrp") for m in allm)         # under $5B: exempt
     assert any(m.startswith("RATES.sofr") and "+17bp" in m for m in allm)
 
@@ -578,6 +578,51 @@ def test_rates_gap_inside_the_series_is_only_a_note(offline, tmp_path, capsys):
     assert "2026-10-14: SOFR has no print for this business day." in out
     assert "### Not published yet" not in out
 
+
+@pytest.mark.parametrize("tga, listed, issue", [(952002, True, False), (1020000, True, True)])
+def test_tga_level_move_limit_is_15_percent(tga, listed, issue):
+    """Week of Oct 21: TGA 883,373 -> 952,002 (+7.8%) is a move in the summary, not an issue; over 15% is."""
+    a, b = seed(), seed()
+    b["WEEKS"]["dates"] = b["WEEKS"]["dates"][1:] + ["2026-10-21"]
+    for k in ("res", "tga", "assets", "rrp"):
+        b["WEEKS"][k] = b["WEEKS"][k][1:] + [tga if k == "tga" else b["WEEKS"][k][-1]]
+    allm, levels = update.moves(a, b)
+    assert any(m.startswith("WEEKS.tga:") for m in allm) == listed
+    assert [m for m in levels if "WEEKS.tga:" in m] == (
+        [f"Level series moved more than 15% in a week: WEEKS.tga: 883373 → {tga} ({(tga / 883373 - 1) * 100:+.1f}%)"]
+        if issue else [])
+
+
+def test_week_of_oct_21_term_repo_ties(offline, tmp_path, capsys):
+    """The Oct 22 run: H.4.1 repurchase agreements Wednesday 67 = the $67M term repo RP 102026 29 outstanding on
+    Oct 21 (overnight repo 0). The row is written, not nulled, and the TGA's +7.8% week opens no issue."""
+    from conftest import raw, text
+    from sources import dts, h41, nyfed
+    offline["h41_current"] = lambda: h41.parse_html(raw("h41_20261022.html"))
+    real_dts, real_ops = offline["dts"], offline["ops"]
+    offline["dts"] = lambda since: {**real_dts(since), **dts.parse(text("dts_operating_cash_balance_20261019_20261021.json"))}
+    new_ops = nyfed.daily(nyfed.parse_ops(text("nyfed_rp_search_20261019_20261022.json")))
+    offline["ops"] = lambda a, b: {**real_ops(a, b), **{d: v for d, v in new_ops.items() if a <= d <= b}}
+    page = write_page(tmp_path, unseeded(seed()))
+    import datetime as dt
+    rc = update.run_update(page, tmp_path / "data" / "summary.json", False, commit_msg=tmp_path / "msg.txt",
+                           issue_body=tmp_path / "issue.md", alerts_path=tmp_path / "alerts.json",
+                           today=dt.date(2026, 10, 22), now=dt.datetime(2026, 10, 22, 18, 15), keys={"BEA_API_KEY": "x"})
+    out = capsys.readouterr().out
+    assert rc == 0
+    b = update.load_page(page.read_text(encoding="utf-8"))
+    D = b["DATA"]["h41"]
+    assert (D["release"], D["wed"]) == ("2026-10-22", "2026-10-21")
+    assert D["t1"]["repo"] == [27, 26, -1881, 67]
+    assert b["WEEKS"]["dates"][-1] == "2026-10-21" and b["WEEKS"]["tga"][-1] == 952002
+    assert b["OPS"]["dates"][-3:] == ["2026-10-20", "2026-10-21", "2026-10-22"]
+    assert b["OPS"]["srf"][-3:] == [0, 0, 1]                     # standing repo usage stays overnight-only
+    row = {r[0]: r for r in b["LOG"]}["Bank reserves"][5]
+    assert row.startswith("New Oct 21.") and "Wednesday reverse repo and repo tie to NY Fed operations." in row
+    assert "ties to the DTS close" in row
+    assert "Non-overnight operations" in out and "RP 102026 29 Repo Term (2 days) $67M" in out
+    assert "WEEKS.tga: 883373 → 952002 (+7.8%)" in out           # listed as a move ...
+    assert not (tmp_path / "issue.md").exists()                  # ... but no issue
 
 def test_ops_not_published_yet(offline, tmp_path, capsys):
     """The newest day's reverse repo result is not out yet: a placeholder, the page's ON RRP rate kept."""

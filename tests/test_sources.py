@@ -134,6 +134,7 @@ def test_ops_wednesday_ties_to_h41():
     for w, r in reads.items():
         assert days[w]["rrp"] == r["t1"]["rrpOthers"][3], w
         assert abs(days[w]["srf"] - r["t1"]["repo"][3]) <= 1, w
+        assert days[w]["repo_out"] == days[w]["srf"], w      # no term repo outstanding on these Wednesdays
     assert days["2026-09-30"]["srf"] == 1200 and days["2026-09-30"]["rrp"] == 11539
 
 
@@ -143,8 +144,24 @@ def test_ops_units_and_other_terms():
     assert nyfed.to_millions(1_500_000) == 1.5
     ops = json.loads(text("nyfed_rp_last12.json"))["repo"]["operations"]
     ops[0] = {**ops[0], "term": "Term", "operationId": "RP X"}
+    ops[1] = {**ops[1], "auctionStatus": "Announcement", "operationId": "RP Y"}
     d = nyfed.daily(ops)
-    assert d[ops[0]["operationDate"]]["other"] == ["RP X Repo Term Results"]
+    assert d[ops[0]["operationDate"]]["term"][0].startswith("RP X Repo Term (1 days)")
+    assert d[ops[1]["operationDate"]]["other"] == [f"RP Y {ops[1]['operationType']} Overnight Announcement"]
+
+
+def test_ops_term_repo_outstanding_oct_20_21():
+    """RP 102026 29: a $67M two-day Small Value Exercise run Oct 20, settled Oct 21, maturing Oct 23. H.4.1
+    repurchase agreements on Wednesday Oct 21 = 67 although every overnight repo that day was 0."""
+    days = nyfed.daily(nyfed.parse_ops(text("nyfed_rp_search_20261019_20261022.json")))
+    r = h41.parse_html(raw("h41_20261022.html"))
+    assert r["wed"] == "2026-10-21" and r["t1"]["repo"] == [27, 26, -1881, 67]
+    assert days["2026-10-21"]["srf"] == 0 and days["2026-10-21"]["repo_out"] == 67 == r["t1"]["repo"][3]
+    assert days["2026-10-21"]["rrp"] == r["t1"]["rrpOthers"][3] == 237
+    assert days["2026-10-20"]["srf"] == 0 and days["2026-10-20"]["repo_out"] == 0   # settles the next day
+    assert days["2026-10-22"]["srf"] == 1 and days["2026-10-22"]["repo_out"] == 68  # still outstanding
+    assert days["2026-10-20"]["term"] == ["RP 102026 29 Repo Term (2 days) $67M, settles 2026-10-21, matures 2026-10-23"]
+    assert days["2026-10-20"]["n"] == 3 and days["2026-10-20"]["other"] == []
 
 
 # ---------------------------------------------------------------------------

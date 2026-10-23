@@ -7,6 +7,8 @@ a `last/{N}` call once came back missing the two newest days. Layouts printed Oc
 - operations: {"repo": {"operations": [{operationDate, operationType ("Repo" / "Reverse Repo"),
   operationMethod, term ("Overnight"), releaseTime, auctionStatus ("Results"), totalAmtAccepted (dollars),
   details: [{securityType, amtAccepted, percentOfferingRate, percentAwardRate (reverse repo)}]}]}}.
+  Term operations (fixture nyfed_rp_search_20261019_20261022.json, RP 102026 29, a "Small Value Exercise")
+  carry term "Term", termCalenderDays 2, a settlementDate after the operationDate and no offering rates.
 """
 from __future__ import annotations
 
@@ -64,7 +66,7 @@ def parse_ops(text: str) -> list[dict]:
     except (ValueError, KeyError, TypeError) as e:
         raise SourceError(f"repo operations: {e}")
     for o in ops:
-        for k in ("operationDate", "operationType", "term", "totalAmtAccepted"):
+        for k in ("operationDate", "operationType", "term", "settlementDate", "maturityDate", "totalAmtAccepted"):
             if k not in o:
                 raise SourceError(f"repo operations: field {k!r} missing in {o.get('operationId')}")
         if o["operationType"] not in ("Repo", "Reverse Repo"):
@@ -73,20 +75,29 @@ def parse_ops(text: str) -> list[dict]:
 
 
 def daily(ops: list[dict]) -> dict[str, dict]:
-    """{date: {srf, rrp, srf_rate, rrp_rate, n, other}}. srf = all overnight Repo operations' accepted amounts
-    (morning plus afternoon), rrp = the overnight Reverse Repo amount, both in $ millions (rrp None when the
-    day has no reverse repo result yet). Rates are the operations' offering rates (standing repo minimum bid,
-    ON RRP offering rate). `other` lists operations that are not overnight results (not counted)."""
+    """{date: {srf, rrp, srf_rate, rrp_rate, n, repo_out, term, other}}. srf = all overnight Repo operations'
+    accepted amounts (morning plus afternoon), rrp = the overnight Reverse Repo amount, both in $ millions (rrp
+    None when the day has no reverse repo result yet). Rates are the operations' offering rates (standing repo
+    minimum bid, ON RRP offering rate). repo_out = every Repo result, any term, outstanding at the end of that
+    day (settlementDate <= date < maturityDate), in $ millions: what H.4.1 shows as repurchase agreements on a
+    Wednesday; None when the day's overnight repo is not published yet. `term` lists the non-overnight results
+    (counted in repo_out, not in srf), `other` the operations that are not results (not counted)."""
     out = {}
     for o in ops:
         d = out.setdefault(o["operationDate"], {"srf": 0, "rrp": None, "srf_rate": None, "rrp_rate": None,
-                                                "n": 0, "other": [], "_srf_dollars": 0, "_rrp_dollars": None})
-        if o.get("term") != "Overnight" or o.get("auctionStatus", "Results") != "Results":
+                                                "n": 0, "repo_out": None, "term": [], "other": [],
+                                                "_srf_dollars": 0, "_rrp_dollars": None})
+        if o.get("auctionStatus", "Results") != "Results":
             d["other"].append(f"{o.get('operationId')} {o['operationType']} {o.get('term')} {o.get('auctionStatus')}")
             continue
         amt = o["totalAmtAccepted"]
         if not _isnum(amt):
             raise SourceError(f"repo operations: {o.get('operationId')} totalAmtAccepted {amt!r}")
+        if o.get("term") != "Overnight":
+            d["term"].append(f"{o.get('operationId')} {o['operationType']} {o.get('term')} "
+                             f"({o.get('termCalenderDays')} days) ${to_millions(amt):,}M, "
+                             f"settles {o['settlementDate']}, matures {o['maturityDate']}")
+            continue
         rates = {x.get("percentOfferingRate") for x in o.get("details") or []}
         if len(rates) != 1 or not _isnum(next(iter(rates))):
             raise SourceError(f"repo operations: {o.get('operationId')} offering rates {sorted(map(str, rates))}")
@@ -104,6 +115,11 @@ def daily(ops: list[dict]) -> dict[str, dict]:
         d["srf"] = to_millions(d.pop("_srf_dollars")) if d["srf_rate"] is not None else None
         r = d.pop("_rrp_dollars")
         d["rrp"] = to_millions(r) if r is not None else None
+    repos = [o for o in ops if o["operationType"] == "Repo" and o.get("auctionStatus", "Results") == "Results"]
+    for day, d in out.items():
+        if d["srf"] is not None:
+            d["repo_out"] = to_millions(sum(o["totalAmtAccepted"] for o in repos
+                                            if o["settlementDate"] <= day < o["maturityDate"]))
     return out
 
 
