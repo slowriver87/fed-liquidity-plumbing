@@ -11,7 +11,7 @@
   "iorb": 3.9,
   "sofr_iorb_bp": 3,
   "effr_iorb_bp": -2,
-  "srf_B": 0.005,
+  "srf_B": 0.004,
   "onrrp_B": 0.2,
   "range": [
     3.75,
