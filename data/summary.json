@@ -1,7 +1,7 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "h41_week": "2026-10-28",
-  "rates_date": "2026-10-28",
+  "rates_date": "2026-10-29",
   "reserves_T": 2.894,
   "tga_B": 999.7,
   "netliq_T": 5.746,
@@ -11,8 +11,8 @@
   "iorb": 3.9,
   "sofr_iorb_bp": 4,
   "effr_iorb_bp": -2,
-  "srf_B": 0.031,
-  "onrrp_B": 0.4,
+  "srf_B": 0.0,
+  "onrrp_B": 4.4,
   "range": [
     3.75,
     4.0
