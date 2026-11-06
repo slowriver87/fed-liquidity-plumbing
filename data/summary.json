@@ -1,11 +1,11 @@
 {
   "updated": "2026-11-05",
-  "h41_week": "2026-10-28",
+  "h41_week": "2026-11-04",
   "rates_date": "2026-11-04",
-  "reserves_T": 2.894,
-  "tga_B": 999.7,
-  "netliq_T": 5.746,
-  "netliq_13w_B": -79,
+  "reserves_T": 2.93,
+  "tga_B": 957.2,
+  "netliq_T": 5.791,
+  "netliq_13w_B": -49,
   "sofr": 3.94,
   "effr": 3.88,
   "iorb": 3.9,
@@ -67,8 +67,8 @@
     },
     {
       "name": "Fed loans to banks",
-      "status": "good",
-      "label": "Ample"
+      "status": "warn",
+      "label": "Tightening"
     },
     {
       "name": "Real fed funds rate",
