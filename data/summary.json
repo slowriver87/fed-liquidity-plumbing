@@ -1,18 +1,18 @@
 {
-  "updated": "2026-11-06",
+  "updated": "2026-11-09",
   "h41_week": "2026-11-04",
-  "rates_date": "2026-11-05",
+  "rates_date": "2026-11-06",
   "reserves_T": 2.93,
   "tga_B": 957.2,
   "netliq_T": 5.791,
   "netliq_13w_B": -49,
-  "sofr": 3.92,
+  "sofr": 3.89,
   "effr": 3.88,
   "iorb": 3.9,
-  "sofr_iorb_bp": 2,
+  "sofr_iorb_bp": -1,
   "effr_iorb_bp": -2,
-  "srf_B": 0.0,
-  "onrrp_B": 0.1,
+  "srf_B": 0.005,
+  "onrrp_B": 0.3,
   "range": [
     3.75,
     4.0
@@ -52,8 +52,8 @@
     },
     {
       "name": "SOFR minus IORB",
-      "status": "warn",
-      "label": "Tightening"
+      "status": "good",
+      "label": "Ample"
     },
     {
       "name": "Fed funds minus IORB",
