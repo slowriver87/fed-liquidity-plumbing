@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-10",
-  "h41_week": "2026-11-04",
-  "rates_date": "2026-11-09",
-  "reserves_T": 2.93,
-  "tga_B": 957.2,
-  "netliq_T": 5.791,
-  "netliq_13w_B": -49,
-  "sofr": 3.88,
+  "updated": "2026-11-12",
+  "h41_week": "2026-11-11",
+  "rates_date": "2026-11-10",
+  "reserves_T": 2.961,
+  "tga_B": 914.4,
+  "netliq_T": 5.844,
+  "netliq_13w_B": 49,
+  "sofr": 3.89,
   "effr": 3.88,
   "iorb": 3.9,
-  "sofr_iorb_bp": -2,
+  "sofr_iorb_bp": -1,
   "effr_iorb_bp": -2,
-  "srf_B": 0.005,
+  "srf_B": 0.001,
   "onrrp_B": 0.2,
   "range": [
     3.75,
@@ -47,8 +47,8 @@
     },
     {
       "name": "Net liquidity, 13-wk change",
-      "status": "warn",
-      "label": "Tightening"
+      "status": "good",
+      "label": "Ample"
     },
     {
       "name": "SOFR minus IORB",
@@ -67,8 +67,8 @@
     },
     {
       "name": "Fed loans to banks",
-      "status": "warn",
-      "label": "Tightening"
+      "status": "good",
+      "label": "Ample"
     },
     {
       "name": "Real fed funds rate",
